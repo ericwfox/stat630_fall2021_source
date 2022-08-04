@@ -1,0 +1,83 @@
+---
+title: "LaTeX Equations in R Markdown"
+author: "STAT 630, Fall 2021"
+output: pdf_document
+---
+
+LaTeX is a language for mathematical typesetting.  LaTeX equations can be inserted into an R Markdown report.
+
+You should be able to typeset LaTeX equations if you are using R Studio Cloud.  If you are using the Desktop version of R Studio (installed on you computer), then you will need to to install LaTeX:
+
+https://www.latex-project.org/get/
+
+Note that learning how to typeset LaTeX equations in Markdown is not required for this class.  But you might find it to be a useful skill, and the equations also look really nice.
+
+## Inline Equations
+
+Inline equation go in between one dollar sign `$`.  Inline equations are part of a paragraph that you write.  For example:
+
+The population mean is denoted with the Greek symbol mu: $\mu$.  The sample mean is denoted as an $x$ with a bar on top: $\bar{x}$.
+
+## Display Equations
+
+Display equations go in between two dollar signs `$$`.  Display equations are not part of a paragraph, and are centered and put on a separate line.  For example:
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$$
+
+## Example Mathematical Expressions
+
+### Fractions
+
+$$\frac{1}{2}$$
+
+### Superscripts and subscripts
+
+Superscripts and subscripts are created using the `^` and `_` symbols, respectively. For example:
+
+$$a^2 + b^2 = c^2$$
+$$y = x_1 + x_2$$
+If the superscript or superscript is longer than one character, then it needs to be put in between curly braces `{}`. For example:
+
+$$F_n = F_{n-1} + F_{n-2}$$
+
+### Square Roots
+
+$$\sqrt{2} \approx 1.41$$
+
+
+### Summations
+
+$$\sum_{k=1}^n k = \frac{n(n+1)}{2}$$
+
+## More Examples
+
+Here are some examples of equations commonly used in statistics.
+
+### Standard Deviation
+
+$$s = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n-1}}$$
+
+### Confidence Interval for One Mean
+
+$$\bar{x} \pm t_{\alpha/2; n-1} \frac{s}{\sqrt{n}}$$
+
+### Confidence Interval for One Proportion
+
+$$\hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+
+### Simple Linear Regression Model
+
+$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
+
+## References
+
+Overleaf tutorial on mathematical expressions in LaTeX:
+
+https://www.overleaf.com/learn/latex/Mathematical_expressions
+
+List of Greek letters and math symbols:
+
+https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
+
+
+

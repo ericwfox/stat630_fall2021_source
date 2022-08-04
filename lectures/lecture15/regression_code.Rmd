@@ -1,0 +1,49 @@
+---
+title: "Linear Regression Code"
+author: "STAT 630, Fall 2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+library(MASS)
+```
+
+```{r}
+lm1 <- lm(MPG.highway ~ Weight, data = Cars93)
+summary(lm1)
+```
+```{r}
+confint(lm1)
+confint(lm1, level = 0.99)
+```
+
+\newpage
+```{r}
+plot(Cars93$Weight, Cars93$MPG.highway,
+     xlab = "Weight (lbs)", 
+     ylab = "Highway MPG")
+abline(lm1) # add least squares line
+```
+\newpage
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(data = Cars93, aes(x = Weight, y = MPG.highway)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Weight (lbs)", y = "Highway MPG") 
+```
+
+
+
+
+
+
+
+
+
+

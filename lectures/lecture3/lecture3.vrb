@@ -1,0 +1,12 @@
+\vspace{-2cm}
+Code used to create last plot:
+\scriptsize
+\begin{verbatim}
+> library(openintro) # load library to access data set
+> par(mfrow=c(2,2)) # split plot into 4 panels
+> hist(county$pop2010, xlab="Population in 2010", main="")
+> hist(log10(county$pop2010), xlab="Log of Population in 2010", main="")
+> boxplot(county$pop2010, xlab="Population in 2010", horizontal = TRUE)
+> boxplot(log10(county$pop2010),
+          xlab="Log of Population in 2010", horizontal = TRUE)
+\end{verbatim}

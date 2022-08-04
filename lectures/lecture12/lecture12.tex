@@ -1,0 +1,221 @@
+\documentclass[12pt, fleqn]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\setlength\parindent{0pt}
+
+\begin{center}
+\textbf{Lecture 12: Inference for Two Proportions}\\
+\textbf{STAT 630, Fall 2021}\\
+\hrulefill
+\end{center}
+
+Let $X_1, X_2, \cdots, X_{n_1}$ be independent random variables from Bern($p_1$), and $Y_1, Y_2, \cdots, Y_{n_2}$ be independent random variables from Bern($p_2$).  Assume that the two samples are independent of each other.\\
+
+The sample proportions are defined as:\\
+$\hat{p}_1 = \frac{1}{n_1} \sum_{i=1}^{n_1} X_i$ and $\hat{p}_2 = \frac{1}{n_2} \sum_{i=1}^{n_2} Y_i$\\
+
+Find the expectation and variance for the difference between two proportions:
+% \vspace{4.5cm}
+{\color{blue}
+\begin{align*}
+E(\hat{p}_1 - \hat{p}_2) &= E(\hat{p}_1) - E(\hat{p}_2) = p_1 - p_2\\
+Var(\hat{p}_1 - \hat{p}_2) &= Var(\hat{p}_1) + (-1)^2 \cdot Var(\hat{p}_2) = \frac{p_1 (1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}
+\end{align*}
+}
+
+According to the central limit theorem, the sampling distribution for the difference between two proportions can be approximated by a normal distribution:
+\begin{align*}
+\hat{p}_1 - \hat{p}_2 \sim N \left( p_1 - p_2, \sqrt{\frac{p_1 (1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}} \right)
+\end{align*}
+The approximation should only be used if $n_i p_i \geq 10$ and $n_i (1-p_i) \geq 10$ for $i=1,2$.  That is, there are at least that 10 ``successes'' and ``failures" for each group.\\
+\vspace{11pt}
+
+\textbf{$1-\alpha$ confidence interval for $p_1 - p_2$}
+\begin{align*}
+\hat{p}_1 - \hat{p}_2 \pm z_{\alpha / 2} \sqrt{\frac{\hat{p}_1 (1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+\end{align*}
+
+Conditions:
+\begin{itemize}
+\item $n_i \hat{p}_i \geq 10$ and $n_i (1-\hat{p}_i) \geq 10$ for $i=1,2$
+\item The data are independent within and between groups.  Generally this is satisfied if the data come from two independent random samples, or if the data come from a randomized experiment.
+\end{itemize}
+\clearpage
+
+\textbf{Ex1}:  A 5-year study was conducted to evaluate the effectiveness of fish oils on reducing cardiovascular events, where each subject was randomized into one of two treatment groups.  We'll consider heart attack outcomes in these patients:\\
+\begin{table}[ht!]
+\begin{tabular}{llll}
+\hline
+& heart attack & no event & Total\\
+\hline
+fish oil & 145 & 12788 & 12933\\
+placebo & 200 & 12738 & 12938\\
+\end{tabular}
+\end{table}
+\begin{enumerate}[(a)]
+\item Is this study an experiment or an observational study?\\
+% \vspace{0.75cm}
+{\color{blue} Experiment}
+
+\item Are the conditions for inference satisfied?\\
+% \vspace{2.75cm}
+{\color{blue} Yes, the ``success" / ``failure" condition is satisfied since the counts in each cell of the contingency table are greater than 10.  That is, there are more than 10 outcomes (hear attack / no event) for the fish oil and placebo groups.  The independence condition is satisfied since the data come from a randomized experiment.}
+
+\item Calculate a 95\% confidence interval for the difference in heart attack rates of patients that take fish oils and patients that take a placebo.  Let's use R to do this:
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{n_fish} \hlkwb{<-} \hlnum{12933}
+\hlstd{phat_fish} \hlkwb{<-} \hlnum{145} \hlopt{/} \hlnum{12933}\hlstd{; phat_fish}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.01121163
+\end{verbatim}
+\begin{alltt}
+\hlstd{n_placebo} \hlkwb{<-} \hlnum{12938}
+\hlstd{phat_placebo} \hlkwb{<-} \hlnum{200} \hlopt{/} \hlnum{12938}\hlstd{; phat_placebo}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.01545834
+\end{verbatim}
+\begin{alltt}
+\hlstd{z_crit} \hlkwb{<-} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{); z_crit}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.959964
+\end{verbatim}
+\begin{alltt}
+\hlstd{SE} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(phat_fish}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{phat_fish)}\hlopt{/}\hlstd{n_fish} \hlopt{+} \hlstd{phat_placebo}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{phat_placebo)}\hlopt{/}\hlstd{n_placebo)}
+\hlstd{ci_lower} \hlkwb{<-} \hlstd{phat_fish} \hlopt{-} \hlstd{phat_placebo} \hlopt{-} \hlstd{z_crit} \hlopt{*} \hlstd{SE}
+\hlstd{ci_upper} \hlkwb{<-} \hlstd{phat_fish} \hlopt{-} \hlstd{phat_placebo} \hlopt{+} \hlstd{z_crit} \hlopt{*} \hlstd{SE}
+\hlkwd{round}\hlstd{(}\hlkwd{c}\hlstd{(ci_lower, ci_upper),} \hlnum{4}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.0070 -0.0015
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\item Interpret the confidence interval in the context of the data.\\
+
+{\color{blue}
+A 95\% confidence interval for $p_1 - p_2$ is $(-0.007, -0.0015)$.\\
+
+We are 95\% confident that the heart attack rate for patients that take fish oils is between 0.7\% and 0.15\% lower than patients that take a placebo.\\
+
+The result is \emph{statistically significant} since 0 is not inside the confidence interval.  However, the result may not be \emph{practically significant} since the effect fish oils have on reducing heart attacks is small (less than a 0.15\% reduction in the heart attack rate when compared to taking a placebo).}
+
+\end{enumerate}
+
+
+
+
+\clearpage
+\textbf{Hypothesis test for the difference between two proportions}\\
+
+Null and alternative hypothesis:\\
+$H_0$: $p_1 = p_2$ (the two population proportions are the same)\\
+$H_A$: $p_1 > p_2$ or $p_1 < p_2$ or $p_1 \neq p_2$\\
+
+Test statistic: Assuming $H_0$ is true, the two proportions are equal: $p_1 = p_2 = p$.  Under this assumption, the variance is given by
+% \vspace{5cm}
+{\color{blue}
+\begin{align*}
+Var(\hat{p}_1 - \hat{p}_2) &= Var(\hat{p}_1) + Var(\hat{p}_2) = \frac{p_1 (1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}\\
+&= \frac{p (1-p)}{n_1} + \frac{p(1-p)}{n_2} = p(1-p)\left( \frac{1}{n_1} + \frac{1}{n_2} \right)
+\end{align*}}
+
+We estimate $p$ with the pooled proportion:
+\begin{align*}
+\hat{p} = \frac{n_1 \hat{p}_1 + n_2 \hat{p}_2}{n_1 + n_2}
+\end{align*}
+Conclusively, the $z$-test statistic is given by
+\begin{align*}
+z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})(1/n_1 + 1 /n_2)}}
+\end{align*}
+Once the z-test statistic is computed, the $p$-value can be computed to decide whether to reject or not reject the null hypothesis.\\
+
+The conditions are the same as for confidence intervals except we use the pooled proportion $\hat{p}$ when checking the number successes and failures (i.e., $n_i \hat{p} \geq 10$ and $n_i (1-\hat{p}) \geq 10$ for $i=1,2$).\\
+
+\clearpage
+\textbf{Ex2}: Are young people more concerned with environmental issues than older people? The Pew Research Center for the People and the Press conducted a survey in 2009 asking a random sample of adults whether or not there is solid evidence of global warming. Of the 197 people aged 18–29 years old who responded, 126 said yes, compared to 223 out of 406 people aged 30–39 years old. Does this indicate that a higher proportion of younger people believe there is evidence of global warming?
+\footnote{\url{http://www.pewresearch.org/2009/10/22/fewer-americans-see-solid-evidence-of-global-warming/}}\\
+
+{\color{blue}
+$H_0: p_1 = p_2$\\
+$H_A: p_1 > p_2$\\
+
+$\hat{p}_1 = 126/197 = 0.64$, $n_1 = 197$\\
+$\hat{p}_2 = 223/406 = 0.55$, $n_2 = 406$\\
+The pooled proportion: $\hat{p} = (126 + 223) / (197 + 406) = 0.58$
+
+\begin{align*}
+z = \frac{0.64 - 0.55}{\sqrt{0.58(0.42)(1/197 + 1/406)}} = 2.1
+\end{align*}
+$p$-value $= P(Z > 2.1) = \texttt{1 - pnorm(2.1)} = 0.018$\\
+
+Since the p-value $<0.05$, we reject the null hypothesis.  The data provide strong evidence that the population proportion of 18-29 year olds that believe in global warming is higher than 30-39 year olds.
+}
+
+
+
+\end{document}

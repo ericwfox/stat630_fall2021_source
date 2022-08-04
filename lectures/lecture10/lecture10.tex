@@ -1,0 +1,150 @@
+\documentclass[12pt, fleqn]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\setlength\parindent{0pt}
+
+\begin{center}
+\textbf{Lecture 10: Power and Sample Size Calculations}\\
+\textbf{STAT 630, Fall 2021}\\
+\hrulefill
+\end{center}
+
+\begin{table}[ht]
+\begin{tabular}{l|l|l}
+ & $H_0$ true & $H_A$ true\\
+\hline
+Reject $H_0$ & Type I error ($\alpha$) & Correct decision ($1-\beta$)\\
+\hline
+Do not reject $H_0$ & Correct decision & Type II error ($\beta$)\\
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Type I error: $\alpha = P( \text{Reject } H_0 | H_0 \text{ true})$
+\begin{itemize}
+\item the probability of falsely rejecting $H_0$
+\end{itemize}
+\item Type II error: $\beta = P( \text{Do not reject } H_0 | H_A \text{ true})$
+\item Power: $1 - \beta = P(\text{Reject } H_0 | H_A \text{ true})$
+\begin{itemize}
+\item the probability of correctly rejecting $H_0$
+\end{itemize}
+\end{itemize}
+
+Remarks:
+\begin{itemize}
+\item If we increase $\alpha$, then $\beta$ decreases (type 1 and 2 errors are inversely related).
+\item If we increase the sample size $n$, then the power of the test increases (which implies the probability of a type 2 error $\beta$ decreases).\\
+\end{itemize}
+\vspace{10pt}
+
+\textbf{Example}:  Blood pressure oscillates with the beating of the heart, and the systolic blood pressure is defined as the peak pressure when a person is at rest.  The average systolic blood pressure for people in the U.S. is about 130 mmHg with a standard deviation of about 25 mmHg.  We are interested in finding out if the average blood pressure of employees at a certain company is greater than the national average, so we randomly sample 100 employees and measure their systolic blood pressure.
+\begin{enumerate}[(a)]
+\item What are the null and alternative hypotheses?
+\item Find the values of the sample mean $\bar{x}$ for which the null hypothesis would be rejected.  That is, find $c$ such that we reject $H_0$ if $\bar{x} > c$. Use $\alpha = 0.05$ significance level. 
+\item Calculate the power of the test ($1-\beta$) if the true average blood pressure for employees at this company is 136 mmHg.
+\item How large of a sample is needed to detect a 4 mmHg increase in average blood pressure with 0.9 power ($\beta=0.1$) and $\alpha = 0.05$?
+\end{enumerate}
+\clearpage
+
+Here are the solutions using R:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# part c}
+\hlcom{# delta = 136-130 = 6}
+\hlkwd{power.t.test}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{100}\hlstd{,} \hlkwc{delta}\hlstd{=}\hlnum{6}\hlstd{,} \hlkwc{sd}\hlstd{=}\hlnum{25}\hlstd{,} \hlkwc{sig.level}\hlstd{=}\hlnum{0.05}\hlstd{,}
+  \hlkwc{type}\hlstd{=}\hlstr{"one.sample"}\hlstd{,} \hlkwc{alternative}\hlstd{=}\hlstr{"one.sided"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+##      One-sample t test power calculation 
+## 
+##               n = 100
+##           delta = 6
+##              sd = 25
+##       sig.level = 0.05
+##           power = 0.7699533
+##     alternative = one.sided
+\end{verbatim}
+\begin{alltt}
+\hlcom{# part d}
+\hlkwd{power.t.test}\hlstd{(}\hlkwc{power}\hlstd{=}\hlnum{0.9}\hlstd{,} \hlkwc{delta}\hlstd{=}\hlnum{4}\hlstd{,} \hlkwc{sd}\hlstd{=}\hlnum{25}\hlstd{,} \hlkwc{sig.level}\hlstd{=}\hlnum{0.05}\hlstd{,}
+  \hlkwc{type}\hlstd{=}\hlstr{"one.sample"}\hlstd{,} \hlkwc{alternative} \hlstd{=} \hlstr{"one.sided"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+##      One-sample t test power calculation 
+## 
+##               n = 335.8827
+##           delta = 4
+##              sd = 25
+##       sig.level = 0.05
+##           power = 0.9
+##     alternative = one.sided
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}

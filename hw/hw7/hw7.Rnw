@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{gensymb}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 7}\\
+\textbf{Due}: Thursday, October 28\\
+
+\textbf{Reading}: \emph{OpenIntro}, Sections 7.2 and 7.3\\
+Suggested practice problems from \emph{OpenIntro} (not to be collected):\\
+7.17, 7.18, 7.19, and 7.30\\
+
+\textbf{Exercise 1}.  For this exercise use the \texttt{ncbirths} data set from the \texttt{openintro} package, which was discussed in lab 8.
+\begin{enumerate}[(a)]
+\item Conduct a hypothesis test evaluating whether the average birth weight of babies born full-term is significantly different than the average birth weight babies born premature. State the null and alternative hypothesis and your conclusion using an $\alpha = 0.01$ significance level.  Also, comment on whether the conditions for the test are adequately satisfied.
+\item Report and interpret a 99\% confidence interval for the difference between the average birth weight of babies born full term and babies born premature.\\
+\end{enumerate}
+
+\textbf{Exercise 2}.  For this exercise use the \texttt{Groceries} data set from the \texttt{resampledata} package:  
+<<message = F>>=
+library(resampledata)
+head(Groceries)
+@
+
+The data set contain a sample of grocery items from Target and Walmart and their prices, advertised on their respective web sites, on one specific day.  
+\begin{enumerate}[(a)]
+\item Make a histogram and compute summary statistics for the price differences (Target price - Walmart price).  What is unusual about Quaker Oats Life Cereal?
+\item Using all the data, perform a paired t-test to determine whether the cost of groceries purchased at Target is significantly different than Walmart. 
+\item Remove the entry for Quaker Oats Life Cereal, and redo the paired t-test.  Do you reach the same conclusion?
+\end{enumerate}
+
+
+
+
+
+\end{document}
+
+<<eval=F, echo=F>>=
+t.test(weight ~ premie, data = ncbirths)
+table(ncbirths$premie)
+boxplot(weight ~ premie, data = ncbirths)
+
+head(Groceries)
+groceries_diff <- Groceries$Target - Groceries$Walmart
+hist(groceries_diff)
+summary(groceries_diff)
+
+t.test(groceries_diff)
+which.max(abs(groceries_diff))
+t.test(groceries_diff[-2])
+
+Groceries2 <- Groceries[-2, ]
+@
+

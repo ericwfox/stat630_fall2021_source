@@ -1,0 +1,89 @@
+---
+title: "Lab 7 Solutions, STAT 630"
+output: pdf_document
+---
+
+## Exercise 1
+### a) Compute summary statistics and plot a histogram and QQ plot for chlorine concentrations.
+```{r, fig.width=8, fig.height=4, message=F, warning=F}
+library(resampledata)
+Chlorine <- Bangladesh$Chlorine
+Chlorine <- Chlorine[!is.na(Chlorine)]
+summary(Chlorine)
+par(mfrow=c(1,2))
+hist(Chlorine, main="")
+qqnorm(Chlorine)
+qqline(Chlorine)
+```
+
+### b) Generate 5000 bootstrap replicates of the mean.  Make a histogram and QQ plot of the 5000 replicates that you generated.
+```{r}
+set.seed(9999)
+n <- length(Chlorine)
+replicates <- rep(0, 5000)
+for(i in 1:5000) {
+  boot_samp <- sample(Chlorine, size = n, replace = TRUE)
+  replicates[i] <- mean(boot_samp) 
+}
+```
+\clearpage
+
+```{r, fig.width=8, fig.height=4}
+par(mfrow=c(1,2))
+hist(replicates, xlab="Replicates of the Mean", main='')
+abline(v=mean(Chlorine), col="cyan")
+qqnorm(replicates)
+qqline(replicates)
+```
+
+
+### c) Calculate a 95\% bootstrap percentile confidence interval for the mean.  Interpret the interval.
+
+```{r}
+bootCI <- quantile(replicates, c(0.025, 0.975))
+round(bootCI, 2)
+```
+Interpretation: We are 95\% confident that the true mean chlorine concentration is between 54.76 and 104.50 micrograms per liter.
+
+### d) Calculate a traditional  95\% confidence interval for the mean using the $z$-critical value.  Compare this interval with the bootstrap confidence interval you calculated.
+
+```{r}
+ci_lower <- mean(Chlorine) - 1.96 * sd(Chlorine) / sqrt(n)
+ci_upper <- mean(Chlorine) + 1.96 * sd(Chlorine) / sqrt(n)
+round(c(ci_lower, ci_upper), 2)
+```
+
+We see that the endpoints of the 95\% bootstrap interval and z-interval are close.  
+\clearpage
+
+## Exericse 2
+### a) Generate 5000 bootstrap replicates of the median.  Make a histogram and QQ plot of the 5000 replicates that you generated.
+```{r}
+set.seed(9999)
+mean(Chlorine, trim=0.1)
+replicates <- rep(0, 5000)
+for(i in 1:5000) {
+  boot_samp <- sample(Chlorine, size = n, replace = TRUE)
+  replicates[i] <- mean(boot_samp, trim=0.1) 
+}
+```
+
+```{r, fig.width=6, fig.height=2.75}
+par(mfrow=c(1,2), cex=0.7)
+hist(replicates, breaks=10, xlab="Replicates of the Median", main='')
+abline(v=mean(Chlorine, trim=0.1), col="cyan")
+qqnorm(replicates); qqline(replicates)
+```
+
+### b) Calculate the bootstrap standard error for the median.
+```{r}
+sd(replicates)
+```
+
+### c) Calculate a 95\% bootstrap percentile confidence interval for the median.  Interpret the interval.
+```{r}
+bootCI <- quantile(replicates, c(0.025, 0.975))
+round(bootCI, 2)
+```
+Interpretation: We are 95\% confident that the true median chlorine concentration is between 11.5 and 16.6 micrograms per liter.
+

@@ -1,0 +1,104 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 1}\\
+\textbf{Due}: Thursday, September 2\\
+
+\textbf{Reading}:  \emph{OpenIntro}, Chapter 1\\ 
+
+\textbf{Directions}: Please submit your completed assignment to Blackboard. Your answers can either be typed, or handwritten and then scanned. The best format for submission is PDF.\\
+
+\textbf{Exercise 1}.  A YouGov poll\footnote{https://today.yougov.com/topics/politics/articles-reports/2021/08/17/california-likely-voters-split-on-newsom}, conducted between August 6 - 12, 2021, asked representative sample of 1,856 California adult residents, ``How motivated do you feel to vote in the recall election?" 65\% of respondents were very motivated, 20\% somewhat motivated, 10\% not too motivated, and 5\% not motivated at all.  Describe the sample, population, statistics, and parameters for this survey.\\
+
+%OI 1.10
+\textbf{Exercise 2}. A survey was conducted to study the smoking habits of UK residents. Below is a data table displaying a portion of the data collected in this survey. Note that 
+``$\pounds$" stands for British Pounds Sterling, ``cig" stands for cigarettes, and ``N/A'' refers to a missing component of the data.
+
+\begin{center}
+\scriptsize{
+\begin{tabular}{rccccccc}
+\hline
+	& sex 	 & age 	& marital 	& grossIncome 					     & smoke & amtWeekends	& amtWeekdays \\ 
+\hline
+1 	& Female & 42 	& Single 	& Under $\pounds$2,600 			     & Yes 	 & 12 cig/day   & 12 cig/day \\ 
+2 	& Male	 & 44	& Single 	& $\pounds$10,400 to $\pounds$15,600 & No	 & N/A 			& N/A \\ 
+3 	& Male 	 & 53 	& Married   & Above $\pounds$36,400 		     & Yes 	 & 6 cig/day 	& 6 cig/day \\ 
+\vdots & \vdots & \vdots & \vdots & \vdots 				             & \vdots & \vdots 	    & \vdots \\ 
+1691 & Male  & 40   & Single 	& $\pounds$2,600 to $\pounds$5,200   & Yes 	 & 8 cig/day 	& 8 cig/day \\   
+\hline
+\end{tabular}
+}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item What does each row of the data table represent?
+\item How many participants were included in the survey?
+\item Indicate whether each variable in the study is numerical or categorical.  If categorical, indicate if the variable is ordinal.\\
+\end{enumerate}
+
+\textbf{Exercise 3}.  For each of the following scenarios, identify whether the study is an observational study or experimental study.   
+\begin{enumerate}[(a)]
+\item Researchers surveyed 959 ninth graders who attended 3 large US urban high schools and found that those who listened to music that had references to marijuana were almost twice as likely to of used marijuana than those who did not listen to music with references to marijuana.   
+\item Is diet effective at combating insomnia?  Some believe that cutting out desserts can help alleviate the problem.  Forty volunteers suffering from insomnia agreed to participate in a month-long study.  Half were randomly assigned to a special no-dessert diet; the others continued desserts as usual.  Those who ate no dessert showed the most improvement. 
+\item The journal \emph{Circulation} reported that among 1900 people who had heart attacks, those who drank an average of 19 cups of tea a week were 44\% more likely than non-drinkers to survive at least 3 years after the attack.
+\end{enumerate} 
+
+\newpage
+
+\textbf{Exercise 4}.   A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture.  To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study
+where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control.
+43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). 24 hours after patients received acupuncture, they were asked if they were pain free. Results are summarized in the contingency table below. 
+
+\noindent\begin{minipage}[l]{0.4\textwidth}
+\begin{tabular}{ll  cc c} 
+& & \multicolumn{2}{c}{\textit{Pain free}} \\
+\cline{3-4}
+&		& Yes 	& No & Total \\
+\cline{2-5}
+& Treatment 	& 10	& 33 & 43 \\
+\raisebox{1.5ex}[0pt]{\emph{Group}} & Control	 	& 2	 	& 44 & 46 \\
+\cline{2-5}
+& Total	& 12 & 77	& 89
+\end{tabular}
+\end{minipage}
+\begin{minipage}[c]{0.05\textwidth}
+\end{minipage}
+\begin{minipage}[c]{0.27\textwidth}
+\begin{center}
+\includegraphics[width = 0.75\textwidth]{earacupuncture.pdf}
+\end{center}
+\end{minipage}
+\begin{minipage}[c]{0.25\textwidth}
+{\footnotesize Figure from the original paper displaying the appropriate area 
+(M) versus the inappropriate area (S) used in the treatment of migraine attacks.}
+\end{minipage}
+\begin{enumerate}[(a)]
+\item What are the explanatory and response variables in this study?
+\item What percent of patients in the treatment group were pain free 24 hours after receiving acupuncture? 
+\item What percent were pain free in the control group?
+\item In which group did a higher percent of patients become pain free 24 hours after receiving acupuncture?
+\item Your findings so far might suggest that acupuncture is an effective treatment for migraines for all people who suffer from migraines. However this is not the only possible conclusion that can be drawn based on your findings so far. What is one other possible explanation for the observed difference between the percentages of patients that are pain free 24 hours after receiving acupuncture in the two groups?\\
+\end{enumerate}
+
+%OI 1.42
+\textbf{Exercise 5}. In a study of three nationally representative large-scale data sets from Ireland, 
+the United States, and the United Kingdom (n = 17,247), teenagers between the ages of 12 to 15 were asked to keep a diary of their screen time and answer questions about how they felt or acted.  The answers to these questions were then used to compute a psychological well-being score. Additional data were collected and included in the analysis, such as each child's sex and age, and on the mother’s education, ethnicity, psychological distress, and employment. The study concluded that there is little clear-cut evidence
+that screen time decreases adolescent well-being.\footnote{Amy Orben and AK Baukney-Przybylski. ``Screens, Teens and Psychological Well-Being: Evidence from three time-use diary studies." In: \emph{Psychological Science} (2018).} 
+\begin{enumerate}[(a)]
+\item Is this an experimental or observational study?
+\item What are the explanatory and response variables in this study?
+\item Comment on whether the results of the study can be generalized to the population.
+\item Can the results of this study be used to establish whether or not there is a cause-and-effect relationship between screen time and adolescent well-begin?
+\end{enumerate}
+
+
+\end{document}

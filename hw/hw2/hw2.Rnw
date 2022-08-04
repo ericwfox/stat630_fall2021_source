@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 2}\\
+\textbf{Due}: Thursday, September 9\\
+
+\textbf{Directions:} Please submit your completed assignment to Blackboard.  For the concept questions, your solutions may be typed, or handwritten and then scanned.  The data analysis questions should be completed using R Markdown and then rendered to HTML, PDF, or Word format.\\  
+
+\large
+\textbf{Concept Questions}\\
+\normalsize
+Please refer to the lecture 2 notes.\\
+
+\textbf{Exercise 1.}  Suppose \{a,b,c,d,e\} is a population of size $N=5$.  Write out all possible samples of size $n=3$ from this population.  For simple random sampling, what is the probability of selecting each sample of size $n=3$?\\
+
+\textbf{Exercise 2.}  Suppose a population consists of $N=40$ individuals.  How many possible samples of size $n=5$ can we select from this population?  Assume that sampling is done without replacement  (i.e., once an individual is selected for the sample, that individual cannot be selected again).\\
+
+% \textbf{Exercise 3.}  A professional society, with a membership of 45,000 is designing a study to evaluate its members' satisfaction with the type of sessions presented at the society's annual meeting.  In each of the following descriptions of the method of selecting participants in the survey, identify the type of sampling method used (SRS, stratified, cluster, or systematic). %OL 2.11
+% \begin{enumerate}[(a)]
+% \item The society has an alphabetical listing of all its members.  It assigns a number to each name and then using a computer software program generates 1250 random numbers between 1 and 45000.  It selects these 1250 members for the survey.
+% \item Using the alphabetical listing of members, the society selects every 20th member on the list. 
+% \item The society is interested in regional differences in its' members opinions.  Therefore, it divides the United States into nine regions with approximately 5000 members per region.  It then randomly selects 450 members from each region for inclusion in the survey.
+% \item The society is composed of doctors, nurses, and therapists, all working in hospitals.  There are a total of 450 distinct hospitals.  The society decides to conduct onsite in-person interviews, so it randomly selects 20 hospitals and interviews all members working at the selected hospitals.\\  
+% \end{enumerate}
+
+\textbf{Exercise 3}.  A college with 3000 students enrolled is interested in surveying its students about a change in administrative policy.  In each of the following descriptions of the method of selecting students for the survey, identify the type of sampling method used (SRS, stratified, cluster, or systematic).
+\begin{enumerate}[(a)]
+\item Randomly sample 100 students, where each student at this college has the same chance of being included in the sample.
+\item There are 100 different classes that are currently in session.  10 classes are randomly selected, and every student attending each of those 10 classes is included in the sample.
+\item Every 25th student is selected from a roster that lists the names and IDs of all students attending the college. 
+\item The students are divided up based on class level (freshman, sophomore, junior, senior).  A simple random sample of 50 students is taken from each class level.\\
+\end{enumerate} 
+
+\textbf{Exercise 4}.  Discuss any sources of bias in the following sampling scenarios:
+\begin{enumerate}[(a)]
+\item An administrator is interested in the number of hours students spend studying.  The administrator proceeds to randomly ask 20 students at the school's library how long they study.  
+\item A polling agency is interested in predicting the percentage of voters that support a certain candidate.  They call or email 1500 random voters.  Only 200 voters actually respond to their phone calls and emails.\\ 
+\end{enumerate}   
+
+\textbf{Exercise 5.}  Consider a population of 1000 voters: 400 are Democrats, and the rest are Republicans.  If you randomly interview 10 voters from this population, what is the probability that exactly 4 are Democrats?\\ 
+\clearpage
+
+\large
+\textbf{Data Analysis and R Questions}\\
+\normalsize
+
+% \textbf{Exercise 7.}  Use R to draw three simple random samples of size $n=10$ from the numbers 1 through 500.\\
+
+The following exercises use the CDC data set discussed in lab 2.  Run the following command to load this data set into your R workspace:
+<<eval=F, echo=T>>=
+cdc <- readRDS(url("https://ericwfox.github.io/data/cdc.rds"))
+@
+
+\textbf{Exercise 6}.  Use \texttt{plot()} to make a scatterplot with \texttt{weight} on the $x$-axis, and \texttt{wtdesire} on the $y$-axis.  Label the $x$-axis ``Weight" and the $y$-axis ``Desired Weight".  Superimpose a 1-1 line on your scatterplot by entering the command \texttt{abline(0,1)} after creating the plot.  Write a couple sentences describing the association between the two variables.\\ 
+
+\textbf{Exercise 7}.  Based on the scatterplot created in the previous exercise, you should notice two outliers.  Use the \texttt{subset()} function to identify the outliers by extracting the two rows of the \texttt{cdc} data frame corresponding to respondents with desired weights above 500 pounds.  What are the actual weights of these two respondents?\\ 
+Next, create a new data frame called \texttt{cdc2} that has the outliers removed (Hint: use \texttt{subset()} again to do this).  Then make another scatterplot with \texttt{weight} on the $x$-axis, and \texttt{wtdesire} on the $y$-axis, but this time with the outliers removed.\\ 
+
+\textbf{Exercise 8}.  Create a new data frame that contains the subset of respondents who are male \emph{and} have exercised in the last month.  Use the \texttt{summary()} function to compute summary statistics for the weight and desired weight of this subset of respondents.\\ 
+
+\textbf{Exercise 9}.  Use the \texttt{table()} function to make a contingency table between the general health, \texttt{genhlth}, and exercise, \texttt{exerany}, variables.  Use \texttt{addmargins()} to include the row and column totals for this table.  What proportion of respondents who reported to be in excellent health exercised in the past month?  What proportion of respondents who reported to be in poor health exercised in the past month?\\
+
+
+\end{document}

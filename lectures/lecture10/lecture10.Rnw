@@ -1,0 +1,73 @@
+\documentclass[12pt, fleqn]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+
+\setlength\parindent{0pt}
+
+\begin{center}
+\textbf{Lecture 10: Power and Sample Size Calculations}\\
+\textbf{STAT 630, Fall 2021}\\
+\hrulefill
+\end{center}
+
+\begin{table}[ht]
+\begin{tabular}{l|l|l}
+ & $H_0$ true & $H_A$ true\\
+\hline
+Reject $H_0$ & Type I error ($\alpha$) & Correct decision ($1-\beta$)\\
+\hline
+Do not reject $H_0$ & Correct decision & Type II error ($\beta$)\\
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Type I error: $\alpha = P( \text{Reject } H_0 | H_0 \text{ true})$
+\begin{itemize}
+\item the probability of falsely rejecting $H_0$
+\end{itemize}
+\item Type II error: $\beta = P( \text{Do not reject } H_0 | H_A \text{ true})$
+\item Power: $1 - \beta = P(\text{Reject } H_0 | H_A \text{ true})$
+\begin{itemize}
+\item the probability of correctly rejecting $H_0$
+\end{itemize}
+\end{itemize}
+
+Remarks:
+\begin{itemize}
+\item If we increase $\alpha$, then $\beta$ decreases (type 1 and 2 errors are inversely related).
+\item If we increase the sample size $n$, then the power of the test increases (which implies the probability of a type 2 error $\beta$ decreases).\\
+\end{itemize}
+\vspace{10pt}
+
+\textbf{Example}:  Blood pressure oscillates with the beating of the heart, and the systolic blood pressure is defined as the peak pressure when a person is at rest.  The average systolic blood pressure for people in the U.S. is about 130 mmHg with a standard deviation of about 25 mmHg.  We are interested in finding out if the average blood pressure of employees at a certain company is greater than the national average, so we randomly sample 100 employees and measure their systolic blood pressure.
+\begin{enumerate}[(a)]
+\item What are the null and alternative hypotheses?
+\item Find the values of the sample mean $\bar{x}$ for which the null hypothesis would be rejected.  That is, find $c$ such that we reject $H_0$ if $\bar{x} > c$. Use $\alpha = 0.05$ significance level. 
+\item Calculate the power of the test ($1-\beta$) if the true average blood pressure for employees at this company is 136 mmHg.
+\item How large of a sample is needed to detect a 4 mmHg increase in average blood pressure with 0.9 power ($\beta=0.1$) and $\alpha = 0.05$?
+\end{enumerate}
+\clearpage
+
+Here are the solutions using R:
+<<>>=
+# part c
+# delta = 136-130 = 6
+power.t.test(n=100, delta=6, sd=25, sig.level=0.05, 
+  type="one.sample", alternative="one.sided")
+
+# part d
+power.t.test(power=0.9, delta=4, sd=25, sig.level=0.05, 
+  type="one.sample", alternative = "one.sided")
+@
+
+
+\end{document}

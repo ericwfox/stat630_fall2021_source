@@ -1,0 +1,13 @@
+\frametitle{Simple Random Sampling}
+Using R to take a SRS of size $n=10$ from a population with $N=100$ cases:
+\begin{verbatim}
+> sample(1:100, size = 10)
+ [1] 48 42 49 77 45 96 33 64 98 65
+
+> sample(1:100, size = 10)
+ [1] 78 62 58 33 36 15  6 64 41  2
+
+> sample(1:100, size = 10)
+ [1] 98 40 53 27  8 29  7 84 59 11
+\end{verbatim}
+%Note by default samples are without replacement.

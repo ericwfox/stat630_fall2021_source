@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{gensymb}
+\usepackage{fullpage}
+
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 6}\\
+\textbf{Due}: Thursday, October 21\\
+
+\textbf{Reading}: \emph{OpenIntro}, Section 7.1\\
+
+\textbf{Directions:} Please submit your completed assignment to Blackboard.  For the concept questions, your solutions may be typed, or handwritten and then scanned.  The data analysis questions should be completed using R Markdown and then rendered to HTML, PDF, or Word format.\\
+
+\textbf{Concept Questions}\\
+Please refer to the notes from lectures 6-8.\\
+
+\textbf{Exercise 1}.  Let $T$ be a random variable following a $t$-distribution with 11 degrees of freedom.
+\begin{enumerate}[(a)]
+\item Find $P(-3 < T < 3)$
+\item Find $c$ such that $P(T > c) = 0.01$\\
+\end{enumerate}
+
+\textbf{Exercise 2}.  A social worker at a large university is interested in determining the average about of sleep students get each night.  A random sample of $n=16$ students are interviewed.  The sample mean $\bar{x} = 9.2$ hours and standard deviation $s = 0.68$ hours.  A histogram and QQ plot of the data are shown below.
+
+<<echo=F, fig.width=5, fig.height=2>>=
+set.seed(123)
+x <- rnorm(16, mean = 9, sd = 0.75)
+par(mfrow=c(1,2), mar = c(4, 4, 1, 1), cex=0.7)
+hist(x, xlab = "Hours of Sleep", main = "")
+qqnorm(x, main = "")
+qqline(x)
+@
+
+\begin{enumerate}[(a)]
+\item Calculate and interpret a 95\% confidence interval for the population mean $\mu$.
+\item Are the conditions for the interval calculated in part (a) satisfied? Explain.
+\item Does the interval you calculated in (a) provide evidence that students are getting more than 8 hours of sleep each night, on average?
+\item Suppose the social worker wants to conduct a new study to determine the average amount sleep students get each night.  How many students would you recommend that the social worker sample so that the margin of error for the interval is $\pm 0.2$ with 95\% confidence?\\
+\end{enumerate}
+
+\newpage
+
+\textbf{Exercise 3}.  A 90\% confidence interval for a population mean, $\mu$, is given as $(65, 77)$.  This confidence interval is based on a simple random sample of 25 observations.  The data have an approximately normal distribution and the population standard deviation is unknown.  Calculate the sample mean, the margin of error, and the sample standard deviation.\\
+
+\textbf{Exercise 4}. A hospital administrator hoping to improve wait times decides to estimate the average emergency room waiting time at her hospital. She collects a simple random sample of 64 patients and determines the time (in minutes) between when they checked in to the ER until they were first seen by a doctor. A 95\% confidence interval based on this sample is (128 minutes, 147 minutes), which is based on the normal model for the mean. Determine whether the following statements are TRUE or FALSE.
+\begin{enumerate}[(a)]
+\item We are 95\% confident that the average waiting time of these 64 emergency room patients is between 128 and 147 minutes.
+\item We are 95\% confident that the average waiting time of all patients at this hospital’s emergency room is between 128 and 147 minutes.
+\item A 90\% confidence interval would be narrower than a 95\% confidence interval if using data collected from the same sample of 64 patients.
+\item There is a 0.95 probability that the average waiting time of all patients at this hospital’s emergency room is between 128 and 147 minutes.\\
+\end{enumerate}
+
+\textbf{Exercise 5}.  Advertisements claim that the average nicotine content of a certain kind of cigarette is only 0.30 milligram.  Suspecting that the average nicotine content is actually higher than what is claimed, the health department takes a random sample of 121 of those cigarettes from different production lots.  They find that the sample mean is $\bar{x} = 0.33$ with a standard deviation of $s=0.15$.
+\begin{enumerate}[(a)]
+\item Write the null and alternative hypothesis for a one-sided test.  
+\item Are the conditions for the test satisfied? Explain. 
+\item Calculate the test statistic and $p$-value, and make a decision using $\alpha = 0.05$.  
+\item What is the conclusion of the test in the context of the data?\\
+\end{enumerate}
+
+\textbf{Exercise 6}.  A random sample is selected from an approximately normal population.  Find the $p$-value for the given set of hypotheses, sample size, and t-test statistic.  Also determine if the null hypothesis would be rejected at $\alpha=0.05$.   
+\begin{enumerate}[(a)]
+\item $H_A: \mu < \mu_0$, $n=25$, $t=-1.2$
+\item $H_A: \mu \neq \mu_0$, $n=7$, $t=-3.45$
+\item $H_A: \mu \neq \mu_0$, $n=7$, $t=0.83$\\
+\end{enumerate}
+
+\clearpage
+
+\textbf{Data Analysis Questions}\\
+Please refer to lab 6.\\ 
+
+\textbf{Exercise 7}.  In addition to arsenic concentrations for 271 wells, the data set \texttt{Bangladesh} contains cobalt and chlorine concentrations.  Note that there are some missing data entries for chlorine that can be removed with the following command:
+<<message = F>>=
+library(resampledata)
+Chlorine <- Bangladesh$Chlorine
+Chlorine <- Chlorine[!is.na(Chlorine)]
+@
+
+\begin{enumerate}[(a)]
+\item Compute summary statistics and plot a histogram and QQ plot for chlorine concentrations.
+\item Generate 5000 bootstrap replicates of the mean.  Make a histogram and QQ plot of the 5000 replicates that you generated.
+\item Compute a 95\% bootstrap percentile confidence interval for the mean.  Interpret the interval.
+\item Compute a traditional  95\% confidence interval for the mean using the $z$-critical value.  Compare this interval with the bootstrap confidence interval.\\
+\end{enumerate}
+
+\textbf{Exercise 8}.  For this exercise also use the Bangladesh chlorine sample.
+\begin{enumerate}[(a)]
+\item Generate 5000 bootstrap replicates of the trimmed mean (trim the upper and lower 10\%).  Make a histogram and QQ plot of the 5000 replicates that you generated.
+\item Compute and interpret a 95\% bootstrap percentile confidence interval for the trimmed mean.  How does this interval compare with the confidence interval for the mean (previous exercise)?
+\end{enumerate}
+
+
+\end{document}

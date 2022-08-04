@@ -1,0 +1,190 @@
+---
+title: "Lab 9: Data Wrangling with `dplyr`"
+author: "STAT 630, Fall 2021"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+The R package `dplyr` provides a set of functions for data manipulation, or data wrangling. `dplyr` is one of the core packages in the so-called tidyverse, which also includes `ggplot2`.  
+
+For this lab, we will focus on the following commonly used `dplyr` functions:
+
+* `select()` take a subset of the columns (variables)
+
+* `filter()` take a subset of the rows (observations)
+
+* `arrange()` reorder the rows
+
+* `mutate()` creates new variables that are functions of existing variables
+
+* `summarise()` and `group_by()` compute summary statistics across different groups
+
+The names of these functions are *verbs* that provide a grammar for data wrangling.\
+
+To load `dplyr` into your R session run the following command:
+```{r, message = FALSE}
+library(dplyr)
+```
+&nbsp;
+
+`dplyr` reference: https://dplyr.tidyverse.org/index.html
+
+\newpage
+
+## CDC Data Set
+
+We will use the CDC data set one more time to demonstrate how to use the `dplyr` package.  The variable descriptions are given in lab 2.
+
+```{r}
+cdc <- readRDS(url("https://ericwfox.github.io/data/cdc.rds"))
+dim(cdc)
+head(cdc)
+```
+
+## `select()`
+
+Use `select()` to subset the columns (variables) of a data frame.
+
+```{r}
+cdc2 <- select(cdc, weight, age, gender)
+head(cdc2)
+```
+
+```{r, eval=F}
+# equivalent base R command
+cdc2 <- cdc[, c("weight", "age", "gender")]
+```
+
+## filter()
+
+Use `filter()` to subset the rows of a data frame.  The first argument is the name of the data frame.  The second argument is a **logical expression** that specifies the rows to subset.
+
+```{r}
+cdc2 <- filter(cdc, age <= 30 & gender == "m")
+head(cdc2)
+```
+
+```{r, eval=F}
+# equivalent base R command
+cdc2 <- subset(cdc, age <= 30 & gender == "m")
+```
+
+
+The following table summarizes the different logical operators in R that you can use with `filter()`:
+
+\begin{center}
+\begin{tabular}{|r|r|}
+\hline
+Operator & Description\\
+\hline
+\texttt{<} & less than\\
+\texttt{<=} & less than or equal to\\
+\texttt{>} & greater than\\
+\texttt{>=} & greater than or equal to\\
+\texttt{==} & exactly equal to\\
+\texttt{!=} & not equal to\\
+\texttt{x | y} & x OR y\\
+\texttt{x \& y} & x AND y\\
+\hline
+\end{tabular}
+\end{center}
+
+## `%>%` 
+
+The pipe operator `%>%` can be used combine multiple operations together.
+
+```{r}
+cdc %>%
+  select(weight, age, gender) %>%
+  filter(age <= 30 & gender == "m") %>%
+  head()
+```
+&nbsp;
+
+**Exercise (in-class):**  Use `filter()` to subset the rows of the `cdc` data frame corresponding to individuals that 
+
+1. are over 6 feet tall
+
+2. are men that have smoked over 100 cigarettes
+
+3. are in `good` or `very good` health  
+
+```{r, eval=F, echo=F}
+cdc %>% filter(height > 72) %>% head(n=10)
+```
+
+```{r, eval=F, echo=F}
+cdc %>% filter(smoke100 == 1 & gender == "m")  %>% head(n=10)
+```
+
+```{r, eval=F, echo=F}
+cdc %>% filter(genhlth == "good" | genhlth == "very good") %>% head(n=10)
+```
+
+
+
+\newpage
+
+## `arrange()`
+
+Use `arrange()` to order the rows of a data frame by the values of a column.
+
+```{r}
+cdc %>% arrange(weight) %>% head(n=10)
+```
+
+Use `desc()` to reorder in descending order:
+```{r}
+cdc %>% arrange(desc(weight)) %>% head(n=10)
+```
+
+## `mutate()`
+
+Use `mutate()` to add a new variable to a data frame.
+
+```{r}
+cdc %>%
+  mutate(wtdiff = wtdesire - weight) %>%
+  head(n=10)
+```
+
+\newpage
+
+## `group_by()` and `summarise()`
+
+`group_by()` and `summarise()` can be used to compute summary statistics across different groups (categories).
+
+The following code gives the mean weight and height for each category of `gender`.  The counts are also given using the `n()` function in `sumamrise()`.  
+
+```{r, message = FALSE}
+cdc %>%
+  group_by(gender) %>%
+  summarise(
+    count = n(),
+    weight_mean = mean(weight),
+    height_mean = mean(height)
+  )
+```
+&nbsp;
+
+**Exercises (in-class):**  For each category of `genhlth` compute the mean age, weight, and desired weight.
+
+```{r, eval=F, echo=F}
+hlth_levels <-  c("poor", "fair", "good", "very good", "excellent")
+cdc$genhlth<- factor(cdc$genhlth, levels = hlth_levels)
+cdc %>%
+  group_by(genhlth) %>%
+  summarise(
+    count = n(),
+    age_mean = mean(age),
+    weight_mean = mean(weight),
+    wtdesire_mean = mean(wtdesire)
+  )
+```
+
+
+
+
+

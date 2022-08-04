@@ -1,0 +1,48 @@
+\documentclass[11pt, fleqn]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+Lecture 1\\
+Practice Problems\\
+STAT 630, Fall 2021\\
+
+\textbf{Exercise 1}.  Indicate whether each of the following variables are numerical or categorical.
+\begin{enumerate}[(a)]
+\item A person's eye color
+\item A person's weight
+\item A person's political party affiliation (democrat, republican, independent)
+\item Score (out of 100 points) on an exam
+\item Zip code\\
+\end{enumerate} 
+
+\textbf{Exercise 2}. The General Social Survey asked the question, ``After an average work day, about how many hours do you have to relax or pursue activities that you enjoy?" to a random sample of 1,155 American adults. The average relaxing time was found to be 1.65 hours. Determine which of the following is the sample, population, statistic, or parameter.
+\begin{enumerate}[(a)]
+\item Average number of hours all American adults spend relaxing after an average 
+work day.
+\item 1.65 hours
+\item All Americans adults
+\item 1,155 American adults\\
+\end{enumerate}
+
+\textbf{Exercise 3}. A study that surveyed a random sample of otherwise healthy high school students found that they are more likely to get muscle cramps when they are stressed. The study also noted that students drink more coffee and sleep less when they are stressed.
+\begin{enumerate}[(a)]
+\item What type of study is this (experimental or observational)?\\
+\vspace{10pt}
+\item Can this study be used to conclude a causal relationship between 
+increased stress and muscle cramps?\\
+\vspace{10pt}
+\item State possible confounding variables that might explain the observed 
+relationship between increased stress and muscle cramps.\\ 
+\end{enumerate}
+
+
+\end{document}

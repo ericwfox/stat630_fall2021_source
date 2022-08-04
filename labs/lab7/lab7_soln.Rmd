@@ -1,0 +1,65 @@
+---
+title: "Lab 7 Solutions"
+author: "Eric Fox"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Solutions to in-class exercises.
+
+```{r, message = FALSE}
+library(openintro)
+```
+
+# Exercise 1
+
+*Conduct a hypothesis test evaluating whether the average weight gained during pregnancy by younger mothers is significantly different than the average weight gained during pregnancy by mature mothers.*
+
+```{r}
+boxplot(gained ~ mature, data = ncbirths)
+```
+
+```{r}
+table(ncbirths$mature)
+```
+
+The conditions for the hypothesis test are satisfied since the samples sizes are large (133 mature, 867 younger), there are no extreme outliers, and the data come from two independent random samples.
+
+```{r}
+t.test(gained ~ mature, data = ncbirths)
+```
+Since p-value = 0.1704 > 0.05, we do not reject $H_0$.  So the difference between the two means is not significantly different than 0.  Moreover, the 95% confidence interval contains 0.
+
+# Exercise 2
+
+*Determine the age cutoff for younger and mature mothers.*
+
+```{r}
+boxplot(mage ~ mature, data = ncbirths)
+abline(h = 35)
+```
+```{r}
+levels(ncbirths$mature)
+```
+
+```{r}
+ncbirths_mature <- subset(ncbirths, mature == "mature mom")
+```
+
+```{r}
+summary(ncbirths_mature$mage)
+```
+
+So the cutoff is 35 years.
+
+
+
+
+
+
+
+
+
+
+

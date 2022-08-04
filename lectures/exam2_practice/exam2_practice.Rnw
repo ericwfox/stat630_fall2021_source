@@ -1,0 +1,89 @@
+\documentclass[fleqn, 11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{gensymb}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{Exam 2 Practice}\\
+Stat 630, Fall 2021\\
+
+\textbf{Exercise 1}.  In each of the following scenarios determine if the data are paired.
+\begin{enumerate}[(a)]
+\item $\rule{2cm}{0.15mm}$ We would like to know if Intel's stock and Southwest Airlines' stock have similar rates of return. To find out, we take a random sample of 50 days, and record Intel's and Southwest's stock on those same days.
+\item $\rule{2cm}{0.15mm}$ We randomly sample 50 items from Target stores and note the price for each. Then we visit Walmart and collect the price for each of those same 50
+items.
+\item $\rule{2cm}{0.15mm}$ A school board would like to determine whether there is a difference in average SAT scores for students at one high school versus another high school in the district. To check, they take a simple random sample of 100 students from each high school.\\
+\end{enumerate}
+
+\textbf{Exercise 2}.  The following is a histogram of a random sample of $n=15$ observations from a population.  Would it be reasonable to compute a 95\% confidence interval for $\mu$ using this data set?  That is, are the conditions for inference satisfied?
+
+<<echo=F, fig.width=3, fig.height=2>>=
+par(mar=c(3, 4, 1, 1), cex=0.8)
+set.seed(100)
+x <- rnorm(14, mean=5, sd=1)
+x2 <- c(x, 25)
+hist(x2, main = "", xlab = "")
+@
+
+\textbf{Exercise 3}.  The following is a histogram of a random sample of $n=200$ observations from a population.  Would it be reasonable to compute a 95\% confidence interval for $\mu$ using this data set?  That is, are the conditions for inference satisfied?
+
+<<echo=F, fig.width=3, fig.height=2>>=
+par(mar=c(3, 4, 1, 1), cex=0.8)
+set.seed(100)
+x <- rnorm(100, mean = 15, sd= 1)
+y <- rnorm(100, mean = 20, sd = 1)
+z <- c(x,y)
+hist(z, xlab = "", main = "")
+@
+
+\newpage
+
+\textbf{Exercise 4}. [From \emph{OpenIntro} Ch.~7.2]  Let's consider a limited set of climate data,
+examining temperature differences in 1948 vs~2018. We sampled 197 locations from the National Oceanic and Atmospheric Administration's (NOAA) historical data, where the data was available for both years of interest. We want to know: were there more days with temperatures exceeding 90$^{\circ}$F in 2018 or in~1948? The difference in number of days exceeding 90$^{\circ}$F (number of days in 2018 - number of days in 1948) was calculated for each of the 197 locations. The average of these differences was 2.9 days with a standard deviation of 17.2 days. We are interested in determining whether these data provide strong evidence that there were more days in 2018 that exceeded 90$^{\circ}$F from NOAA's weather stations.\\
+\includegraphics[scale = 0.5]{diff_hist.pdf}
+
+\begin{enumerate}[(a)]
+\item Are these data from two independent samples, or are these data paired?
+\vspace{1cm}
+
+\item Write the null and alternative hypothesis for a one-sided test.
+\vspace{1cm}
+
+\item Are the conditions for the hypothesis test satisfied?
+\vspace{3cm}
+
+\item Calculate the test statistic and $p$-value, and make a decision using $\alpha = 0.05$ significance level.\\
+\includegraphics[scale = 0.5]{norm_draw.pdf}
+
+\newpage
+\item What is the conclusion of the test in the context of the data?
+\vspace{4cm}
+
+\item Calculate and interpret a 90\% confidence interval for the population mean difference between the number of days exceeding 90$^{\circ}$F in 1948 and 2018.\\
+\includegraphics[scale = 0.55]{norm_draw.pdf}
+\end{enumerate}
+
+<<eval = FALSE, echo=FALSE>>=
+library(openintro)
+d <- climate70$dx90_2018 - climate70$dx90_1948
+mean(d)
+sd(d)
+length(d)
+t.test(d, alternative = "greater")
+t.test(d, conf.level = 0.9)
+
+pdf("diff_hist.pdf", width=5, height=4)
+par(mar = c(4.5, 4.5, 1, 1))
+hist(d, xlab = "Difference in Number of Days", main = "")
+dev.off()
+@
+
+
+\end{document}

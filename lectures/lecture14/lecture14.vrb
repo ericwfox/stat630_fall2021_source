@@ -1,0 +1,10 @@
+\frametitle{Example}
+\small
+\begin{verbatim}
+> library(MASS)
+> plot(Cars93$Weight, Cars93$MPG.highway,
+    xlab = "Weight (lbs)", ylab = "Highway MPG")
+\end{verbatim}
+\begin{figure}
+\includegraphics[scale=0.5]{figure/mpg_scatter.pdf}
+\end{figure}

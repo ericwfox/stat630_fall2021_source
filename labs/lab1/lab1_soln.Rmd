@@ -1,0 +1,59 @@
+---
+title: "Lab 1: Solutions to Practice Problems"
+author: "STAT 630, Fall 2021"
+output: pdf_document
+---
+
+## Exercise 1
+```{r}
+sum(1:1000)
+```
+
+## Exercise 2
+```{r}
+seq(3, 60, by = 3)
+```
+
+## Exercise 3
+```{r}
+min(mtcars$wt)
+max(mtcars$wt)
+mean(mtcars$wt)
+median(mtcars$wt)
+```
+Or you can use `summary()` to compute all these at once:
+```{r}
+summary(mtcars$wt)
+```
+
+\newpage
+
+## Exercise 4
+There is a negative association between the number of cylinders and miles per gallon (mpg).  As the number of cylinders increases, the mpg of the car decreases.
+```{r}
+plot(mtcars$cyl, mtcars$mpg, xlab = "Number of cylinders", ylab = "Miles per gallon")
+```
+
+## Exericse 5
+The Lotus Europa has the minimum weight.  The Lincoln Continental has the maximum weight.
+```{r}
+mtcars[which.min(mtcars$wt), ]
+mtcars[which.max(mtcars$wt), ]
+```
+
+## Exercise 6
+```{r}
+x <- c(1, 0, FALSE, TRUE)
+y <- c(1, 2, "three")
+z <- c("TRUE", FALSE)
+```
+```{r}
+x
+class(x)
+y
+class(y)
+z
+class(z)
+```
+
+

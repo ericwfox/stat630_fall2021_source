@@ -1,0 +1,249 @@
+\documentclass[fleqn, 12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{multicol}
+\setlength{\columnsep}{-3cm}
+
+\begin{document}
+
+\setlength\parindent{0pt}
+
+\begin{center}
+\textbf{Lecture 7: Confidence Intervals with the $t$-Distribution}\\
+\textbf{STAT 630, Fall 2021}\\
+\hrulefill
+\end{center}
+
+\textbf{The t-distribution}\\
+
+Let $X_1, X_2, \cdots, X_n$ be a random sample of size $n$ from a normal distribution;\\ i.e., $X_i \sim N(\mu, \sigma)$.  Consider the random variable 
+\begin{align*}
+T=\frac{\bar{X} - \mu}{S / \sqrt{n}},
+\end{align*}
+were $S$ is the sample standard deviation (also random) defined by
+\begin{align*}
+S = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2}
+\end{align*}
+Then the random variable $T$ is said to follow a t-distribution (or Student's t-distribution) with $n-1$ degrees of freedom.  We can also use the notation $\frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n-1}$.
+
+<<echo=F, fig.width=5.5, fig.height=4>>=
+par(mar=c(2, 4, 3, 2))
+grd <- seq(-4.5, 4.5, by=0.01)
+y1 <- dt(grd, df=1)
+y3 <- dt(grd, df=3)
+y10 <- dt(grd, df=10)
+y30 <- dt(grd, df=30)
+z <- dnorm(grd)
+plot(grd, z, type='l', xlab = '', ylab='density')
+lines(grd, y1, lty=2)
+lines(grd, y3, lty=3)
+lines(grd, y10, lty=4)
+lines(grd, y30, lty=5)
+legend("topright", expression(t[1], t[3], t[10], t[30], N(0,1)), lty=c(2,3,4,5,1)) 
+@
+\clearpage
+
+\textbf{Remarks}:
+\begin{itemize}
+\item Similar to the standard normal distribution, the $t$-distribution is bell-curve shaped, symmetric, and centered about zero.
+\item Remarkably, the t-score, $t=(\bar{x} - \mu)/(s / \sqrt{n})$ depends on the sample standard deviation $s$, not the population standard deviation $\sigma$; this is one of its most useful properties.
+\item The $t$-distribution has wider tails than the standard normal distribution.
+\item The $t$-distribution approaches the standard normal distribution as $n$ gets large.  That is, $t_{n-1} \rightarrow N(0,1)$ as $n \rightarrow \infty$.  In fact, when the degrees of freedom is about 30 or more, the $t$-distribution is nearly indistinguishable from the standard normal distribution.\\ %Cite OpenIntro, p.~221
+\end{itemize}
+
+\textbf{Ex1}: Simulating random numbers from $t_6$
+<<eval=T, echo=T, fig.width=8, fig.height=4>>=
+set.seed(999)
+t <- rt(5000, df=6) 
+par(mfrow=c(1,2), cex=0.75)
+hist(t)
+qqnorm(t)
+qqline(t)
+@
+\clearpage
+
+\textbf{Constructing a confidence interval for $\mu$ when $\sigma$ is unknown and the population distribution is normal}\\
+
+Let $X_1, X_2, \cdots, X_n$ be a random sample of size $n$ from a normal population distribution;\\ i.e., $X_i \sim N(\mu, \sigma)$.  Since the random variable $\frac{\bar{X} - \mu}{S / \sqrt{n}}$ follows a $t$-distribution with $n-1$ degrees of freedom we can write the following probability statement:
+\begin{align*}
+P \left( -t_{\alpha/2; n-1} < \frac{\bar{X} - \mu}{S / \sqrt{n}} < t_{\alpha/2; n-1} \right) = 1 - \alpha
+\end{align*}
+
+Rearranging terms in the above probability statement gives:
+\begin{align*}
+P(\bar{X} - t_{\alpha/2; n-1} S / \sqrt{n} < \mu < \bar{X} + t_{\alpha/2; n-1} S / \sqrt{n}) = 1-\alpha
+\end{align*}
+
+Therefore, a $100(1-\alpha)$\% confidence interval for $\mu$ is given by
+\begin{align*}
+\bar{x} \pm t_{\alpha/2; n-1} \frac{s}{\sqrt{n}}
+\end{align*}
+
+The critical value $t_{\alpha/2; n-1}$ is defined as follows:
+
+<<echo=F, fig.width=5.5, fig.height=3.5>>=
+par(mar=c(4, 4, 1, 2))
+grd <- seq(-4, 4, 0.01)
+y <- dnorm(grd)
+plot(grd, y, type='n', ylab='', xlab='', xaxt='n', yaxt='n')
+lines(grd, y)
+axis(side=1, at=c(-1.5, 0, 1.5), labels=expression(-t[alpha/2*";"~n-1], 0, t[alpha/2*";"~n-1]))
+lines(c(-1.5,-1.5), c(0,dnorm(-1.5)), lty=2)
+lines(c(1.5,1.5), c(0,dnorm(1.5)), lty=2)
+text(0, 0.2, labels = expression(1-alpha))
+text(-2.1, 0.01, labels = expression(alpha/2))
+text(2.1, 0.01, labels = expression(alpha/2))
+@
+
+In R, $t_{\alpha/2;n-1} = \texttt{qt(1-alpha/2, df=n-1)}$\\
+
+
+
+\clearpage
+
+\textbf{Conditions:}  The t-confidence interval for $\mu$ is valid if the following conditions are satisfied:
+\begin{itemize}
+\item Sample observations are independent.  Generally, this is satisfied when the data come from a random sample.
+\item The sample size is large ($n \geq 30$), and there are no extreme outliers.  This implies that the sampling distribution for $\bar{X}$ is approximately normal according to the central limit theorem.
+\item Otherwise, if the sample size is small ($n < 30$), the data should follow an approximate normal distribution.  Graphical methods can be used to check this (box plot, histogram, normal QQ plot).
+\end{itemize}
+
+\textbf{Remark:}  When the sample size is large ($n \geq 30$), we can use either a $t$ or $z$ critical value to make a confidence interval for $\mu$, since the distributions are nearly identical.\\
+
+% Old notes
+% \begin{itemize}
+% \item Use the $t$-critical value in the confidence interval for $\mu$ when the sample size is small ($n<30$) and the data are approximately normally distributed.
+% \item For large sample sizes ($n \geq 30$) the critical values calculated using the $t$ or $z$ distributions are approximately the same.  Moreover, because of the CLT, we do not need to assume that the population distribution is normal.  
+% \item $t$-critical values are larger than corresponding $z$-critical values, so confidence intervals constructed using $t$-critical values are wider.\\
+% \end{itemize}
+
+\textbf{Ex2}:  Let $T$ be a random variable following a $t$-distribution with 9 degrees of freedom.
+\begin{enumerate}[(a)]
+\item Calculate $P(T < 1.5)$\\
+\includegraphics[scale=0.55]{norm_draw.pdf}
+\vspace{1cm}
+
+<<eval=F, echo=F>>=
+pt(1.5, df=9)
+@
+
+\item Calculate $P(-0.75 < T < 1.5)$\\
+\includegraphics[scale=0.6]{norm_draw.pdf}
+\vspace{1cm}
+
+% \medskip
+% {\color{blue} $P(-0.75 < T < 1.5) = P(T < 1.5) - P(T < -0.75)$}
+<<eval=F, echo=F>>=
+pt(1.5, df=9) - pt(-0.75, df=9) 
+@
+
+\item Find the value $c$ such that $P(T > c) = 0.2$\\
+\includegraphics[scale=0.6]{norm_draw.pdf}
+\vspace{1cm}
+
+% \medskip
+% {\color{blue} $P(T > c) = 0.2 \implies P(T < c) = 0.8$}
+<<eval=F, echo=F>>=
+qt(0.8, df=9)
+@
+\end{enumerate}
+\clearpage
+
+\textbf{Ex3}:  Compare the critical values $t_{\alpha/2; n-1}$ and $z_{\alpha/2}$ when the sample size $n=30$ and the confidence level is 0.95.\\
+\begin{multicols}{2}
+\includegraphics[scale=0.6]{norm_draw.pdf}
+
+\columnbreak
+
+{\color{blue}
+$t_{0.025; 29} = \texttt{qt(0.975, df=29)} = \Sexpr{round(qt(0.975, df=29), 3)}$\\
+$z_{0.025} = \texttt{qnorm(0.975)} = \Sexpr{round(qnorm(0.975), 3)}$\\
+
+The critical values are close when $n=30$.\\  
+The $t$-critical value is slightly larger.\\
+}
+\end{multicols}
+
+\bigskip
+
+\textbf{Ex4}:  Below are some summary statistics and a box plot for the ages of a random sample of $n=26$ female athletes who participated in the 2012 Olympic Games in London.  Using this information, calculate and interpret a 95\% confidence interval for the population mean age.  Comment on whether the conditions for the interval appear satisfied.\footnote{Data obtained from the data set \texttt{Olympics2012} in the R package \texttt{resampledata}.} 
+
+\begin{table}[ht]
+\begin{tabular}{lllll}
+\hline
+n & $\bar{x}$ & s & min & max\\
+\hline
+26 & 26.9 & 4.5 & 19 & 36
+\end{tabular}
+\end{table}
+
+\includegraphics[scale=0.7]{age_boxplot.pdf}
+
+{\color{blue} The conditions for the interval are satisfied:  First, the independence condition is met since the data come from a random sample.  Second, the data follow an approximate normal distribution in the box plot, and there are no outliers (we need to check normality since $n < 30$).\\   
+
+At the $0.95$ confidence level, the critical value is \texttt{qt(0.975, df=25) = 2.06}. Therefore, a 95\% confidence interval for $\mu$ is given by:
+$$\bar{x} \pm t_{\alpha / 2; n-1} \frac{s}{\sqrt{n}}
+\implies 26.9 \pm 2.06 \cdot \frac{4.5}{\sqrt{26}}
+\implies (25.08, 28.72)$$
+
+Interpretation: We are 95\% confident that the population mean age, $\mu$, is between 25.08 and 28.72.
+}
+
+<<eval=F, echo=F>>=
+library(resampledata)
+head(Olympics2012)
+Olympics2012_f <- subset(Olympics2012, Sex == "F")
+summary(Olympics2012_f$Age)
+sd(Olympics2012_f$Age)
+
+pdf("age_boxplot.pdf", width=3, height=2)
+par(mar=c(3, 1, 1, 1))
+boxplot(Olympics2012_f$Age, horizontal = TRUE)
+dev.off()
+
+qqnorm(Olympics2012_f$Age)
+qqline(Olympics2012_f$Age)
+hist(Olympics2012_f$Age)
+@
+
+
+\clearpage
+\textbf{Simulation Study}:  Compare the coverage of confidence intervals constructed using the $t$ and $z$ distributions when repeatedly taking samples of size $n=5$ from a\\ $N(\mu=50,\sigma=10)$ population distribution.  Use a 95\% confidence level.
+
+<<>>=
+set.seed(999)
+mu <- 50
+count_t <- count_z <- 0
+for(i in 1:1000) {
+  samp <- rnorm(5, mean=50, sd=10)
+  
+  # t-interval
+  tcrit <- qt(0.975, df=4)
+  ci_lower <- mean(samp) - tcrit * sd(samp) / sqrt(5)
+  ci_upper <- mean(samp) + tcrit * sd(samp) / sqrt(5)
+  if(mu >= ci_lower & mu <= ci_upper) {
+    count_t <- count_t + 1
+  }
+  
+  # z-interval
+  zcrit <- qnorm(0.975)
+  ci_lower <- mean(samp) - zcrit * sd(samp) / sqrt(5)
+  ci_upper <- mean(samp) + zcrit * sd(samp) / sqrt(5)
+  if(mu >= ci_lower & mu <= ci_upper) {
+    count_z <- count_z + 1
+  }
+}
+count_t / 1000
+count_z / 1000
+@
+
+Conclusion: The proportion of $t-$confidence intervals that contain $\mu=50$ is \Sexpr{round(count_t / 1000, 3)}, which is close to the 0.95 confidence level.  However, the proportion of $z-$confidence intervals that contain $\mu=50$ is \Sexpr{round(count_z / 1000, 3)}, which is less than the 0.95 confidence level (intervals are too narrow).
+\clearpage
+
+\end{document}

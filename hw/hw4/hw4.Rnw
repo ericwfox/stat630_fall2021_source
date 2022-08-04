@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 4}\\
+\textbf{Due}: Thursday, September 23\\
+
+\textbf{Reading}: \emph{OpenIntro}, Section 4.1.  For a review of random variables, expectation, and variance read Section 3.4.\\
+
+\textbf{Directions:} Please submit your completed assignment to Blackboard.  For the concept questions, your solutions may be typed, or handwritten and then scanned.  The data analysis questions should be completed using R Markdown and then rendered to HTML, PDF, or Word format.\\
+
+\large
+\textbf{Concept Questions}\\
+\normalsize
+Please refer to the lecture 4 notes.\\
+
+\textbf{Exercise 1}.  Heights of 10 year olds, regardless of gender, closely follow a normal distribution with mean 55 inches and standard deviation 6 inches. %OI, 4.44
+\begin{enumerate}[(a)]
+\item What is the probability that a randomly chosen 10 year old is shorter than 48 inches?
+\item What is the probability that a randomly chosen 10 year old is between 60 and 65 inches?
+\item What is the height cutoff for the tallest 5\% of ten year olds (the 95$^{th}$ percentile)?\\
+\end{enumerate}
+
+\textbf{Exercise 2}.  Josh, a student in a statistics class, scored 85 points on the first exam and 80 points on the second exam. The mean score on the first exam for all students in this course was 79 with a standard deviation of 4.  The mean score on the second exam was 60 with a standard deviation of 10.  The distributions of both exam scores are approximately normal.
+\begin{enumerate}[(a)]
+\item What is Josh's $z$-score on the first exam?
+\item What is Josh's $z$-score on the second exam?
+\item On which exam did Josh do better when compared with other students in the class?  Explain.\\
+\end{enumerate}
+
+\textbf{Exercise 3}.  Suppose weights of the checked baggage of airline passengers follow a nearly normal distribution with mean 45 pounds and standard deviation 3.2 pounds. Most airlines charge a fee for baggage that weigh in excess of 50 pounds. Determine what percent of airline passengers incur this fee.\\
+
+\textbf{Exercise 4}. Assume a random variable $X$ follows a normal distribution with mean $\mu$ and standard deviation $\sigma$.  What is the probability that an observation falls below $\mu + 2\sigma$?\\
+
+% \textbf{Exercise 4}.  Suppose that the height $X$ in inches of a 25-year old man is a normal random variable with mean $\mu=70$ inches.  If $P(X>79)=0.025$ what is the standard deviation of this random normal variable?\\
+\newpage
+
+\large
+\textbf{Data Analysis and R Questions}\\
+\normalsize
+Please refer to lab 4.\\
+
+
+\textbf{Exercise 5}.  Let $Z \sim N(0,1)$ be a random variable following a standard normal distribution.  Use \texttt{qnorm()} to find the value $c$ such that:
+\begin{enumerate}[(a)]
+\item $P(Z < c) = 0.8$
+\item $P(Z  > c) = 0.01$
+\item $P(-c < Z < c) = 0.95$\\
+\end{enumerate}
+
+\textbf{Exercise 6}.  Generate 1000 random numbers from a normal distribution with mean $\mu=100$ and standard deviation $\sigma=20$, and then plot the histogram.  Also make a normal QQ plot with the random numbers you generated.\\
+
+\textbf{Exercise 7}.  Use \texttt{dnorm()} to plot normal density curves for the distributions $N(\mu=20, \sigma=2)$ and $N(\mu=20, \sigma=4)$.  Include both density curves on the same plot.  Comment on how changing the standard deviation parameter $\sigma$ affects the shape of the normal curve.\\
+
+The following exercise uses the CDC data set.  Run the following command to load this data set into R:
+
+<<eval=F, echo=T>>=
+cdc <- readRDS(url("https://ericwfox.github.io/data/cdc.rds"))
+@ 
+
+\textbf{Exercise 8}.  Subset the females from the \texttt{cdc} data set.  Make a density histogram and normal QQ plot of the \texttt{height} and \texttt{weight} variables for the females.  Superimpose a normal curve on the density histogram, using the sample mean and sample standard deviation as the parameters.  Use \texttt{qqline()} to add a reference line to the QQ plot.  Do the points on the QQ plots fall on the straight line? Comment on any deviations in the data from the normal distribution.
+
+
+
+\end{document}

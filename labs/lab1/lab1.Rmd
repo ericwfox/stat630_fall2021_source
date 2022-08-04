@@ -1,0 +1,333 @@
+---
+title: "Lab 1: Introduction to R"
+author: "STAT 630, Fall 2021"
+output: pdf_document
+fontsize: 12pt
+toc: TRUE
+---
+
+\newpage
+
+## Installing R
+To download the latest version of R go here:
+
+https://cloud.r-project.org/
+
+Click on the "Download R" link for your operating system (Windows, Mac) and follow the instructions for installation.
+
+## Installing RStudio
+To download the latest version of RStudio go here:
+
+https://rstudio.com/products/rstudio/download/
+
+Click on the button to download "RStudio Desktop Open Source License" (free version).  Next click on the link to download RStudio for your operating system (Windows, Mac) and follow the instructions for installation.
+
+## RStudio Cloud
+
+RStudio Cloud allows you to use RStudio through your internet browser.  I've created a shared space for STAT 630 on RStudio Cloud, which you can join by clicking on this link:
+
+\scriptsize
+
+https://rstudio.cloud/spaces/163208/join?access_code=aTzkvCUEJG%2FUKNcuNzaJq5g092oQF9VZb2zX9Fwt
+
+\normalsize
+
+Some advantages to using RStudio Cloud:
+
+* You will be using the most recent version of R and RStudio.
+
+* I can see and edit your R code for each assignment.
+
+* Packages and data sets will be pre-loaded for assignments.
+
+For this course you can use either the desktop or cloud version of R.
+\newpage
+
+## Getting Started with RStudio
+Go ahead and open RStudio, what you see should look like the screenshot below.  For clarification: R is the name of the programming language and RStudio is a convenient interface.    
+<br>
+
+\includegraphics[width=6in]{RStudio.png}
+
+RStudio is divided into four panels:
+
+* Top left panel:  This is the code editor, this is where you write your code.  To create a new R script go to File $\rightarrow$ New File $\rightarrow$ R Script.  Make sure to save your R scripts so that you can access them later.
+
+* Bottom left panel:  This is the console, this is where you run your code.  You can either copy and paste code from an R script to the console, or use the shortcut Ctrl+Enter (Windows) or Command+Enter (Mac) to run a line of code.
+
+* Bottom right panel:  Any plots you create will show up in this panel.  This panel also contains the help menu, where you can read documentation about R functions.
+
+* Top right panel:  This contains panel the Environment and History. The Environment panel shows everything that is currently in your workspace (e.g., objects you create or data sets you have loaded for analysis).  The History panel provides a history of all previous commands you have run in the console.
+
+\newpage
+
+## Using R as a Calculator
+You can use R for basic calculations: addition, subtraction, multiplication, and exponentiation
+
+```{r}
+2 + 2
+5 - 2
+2 * 3
+2^4
+2^(1/2)
+sqrt(2)
+(1/51 + 1/49)^(1/2)
+7.2 + 2 * 2.1 / sqrt(101) 
+```
+
+If you want to edit a previous command, press the up arrow key.  For instance, I may want alter the last computation:
+
+```{r}
+7.2 - 2 * 2.1 / sqrt(101) 
+```
+\newpage
+
+## Variable Assignment
+
+The `<-` symbol is called the assignment operator.  It assigns values to variables.
+
+```{r}
+x <- 7 # assign 7 to the variable x
+x # print value of x
+y <- 3  
+y
+x + y
+```
+
+The `=` symbol can also be used for assignment.
+
+```{r}
+z = -1
+z
+```
+
+The \# symbol is used to write comments.  Anything to the right of \# is not evaluated in the console.  Comments are useful when sharing code with others (or to help me understand my code in the future!).
+
+\newpage
+
+## Numeric Vectors
+
+A `numeric vector` in R is just a collection of numbers.  Vectors are created using `c()`, which is short for combine.
+
+```{r}
+x <- c(1, 2, 3, 47)
+y <- c(1, -1, 2, -2)
+```
+
+We can add and multiply vectors.  We can also multiply or divide a vector by a scalar.  Operations are performed element-wise.
+
+```{r}
+x + y
+x * y
+2*x # multiplies each element by 2
+x/2 # divides each element by 2
+x^2 # squares each element of the vector
+```
+
+### Sequences
+Some ways to create vectors containing sequences of numbers:
+
+```{r}
+x <- 1:10
+x
+y <- seq(2, 20, by=2)
+y
+z <- seq(0, 1, by=0.1)
+z
+```
+
+### Vector Functions
+
+R provides some easy-to-use functions for computing numerical summaries of vectors.  Below are some examples using a vector containing the ages of 10 people.
+
+```{r}
+age <- c(54, 40, 53, 26, 56, 52, 28, 39, 15, 17)
+length(age) # length of vector
+min(age)
+max(age)
+mean(age)
+median(age)
+sd(age) # standard deviation
+```
+
+Or more conveniently, use `summary()` to compute several summary statistics at once.
+```{r}
+summary(age)
+```
+Note that `1st Qu.` in the first quartile (25th percentile) and `3rd Qu.` is the third quartile (75th percentile).
+
+Documentation on these functions is provided in the help menu.  To access the help menu from the console use the \texttt{help()} function.  For example, enter the following command to read about the `mean` function in the help menu:
+```{r, eval=F, echo=T}
+help(mean)
+```
+
+\newpage
+
+### Subsetting a Vector
+
+To subset specific elements of a vector use brackets `[]`.  The number in the bracket is the index, that is, the position of the element within the vector.
+
+```{r}
+age <- c(54, 40, 53, 26, 56, 52, 28, 39, 15, 17)
+age[1]
+age[4]
+age[1:4]
+age[c(1, 4)]
+```
+&nbsp;
+
+## Data Frames
+
+Data sets in R are represented as objects called `data frames`.  The columns of a data frame are the variables, and the rows of a data frame are the observations.  The columns of a data frame can be different types (e.g., numeric, character, logical).
+
+As an example, lets start by examining a data frame called \texttt{mtcars}, which is already loaded into R.  This data set comes from the 1974 \emph{Motor Trend} magazine, and contains variables (columns) on automobile design and performance for 32 different automobile models (rows).
+
+```{r}
+head(mtcars) # preview first several rows
+```
+
+The `head()` function provides a preview of the first several rows of the data frame.  You can also type \texttt{mtcars} into the console, and it will print out the entire data set.  But for larger data sets this is not advisable.  To learn more about this data, use the help menu by typing \texttt{help(mtcars)} into the console.
+
+Below are some functions that provide information on the size of a data frame:
+```{r}
+nrow(mtcars) # number of rows
+ncol(mtcars) # number of columns
+dim(mtcars) # dimension 
+```
+
+We can also extract the row and column names:
+```{r}
+names(mtcars) # names of the columns (variables)
+row.names(mtcars) # names of the rows (car models)
+```
+
+\newpage
+### Subsetting Rows and Columns
+
+To subset a specific column, or variable, use the `$` operator.  For example, we can extract the `mpg` column (miles per gallon) from `mtcars`:
+```{r}
+mtcars$mpg
+```
+
+Notice that when we subset a column this way, we are actually extracting a vector.  Therefore, we can use some of the previously mentioned vector functions.
+```{r}
+summary(mtcars$mpg)
+```
+
+Columns and rows of a data frame can also be extracted by index (position) using brackets:
+```{r}
+mtcars[1, ] # extract first row
+mtcars[, 1] # extract first column
+mtcars[2, 3] # extract element in the second row and third column
+mtcars[2:3, ] # extract second and third row
+```
+
+\newpage
+
+### Scatterplot
+
+To make a scatterplot in R use the \texttt{plot()} function.  For example, below is scatter plot with car weight on the $x$-axis and mileage on the $y$-axis.  Each point represents a different car model from the `mtcars` data frame.
+
+```{r, fig.height = 4, fig.width = 5}
+plot(mtcars$wt, mtcars$mpg, xlab="Weight (tons)", ylab="MPG")
+```
+
+Based on this scatterplot we can see that there is a decreasing and linear relationship between weight and mileage.  That is, as weight increases the mileage decreases, on average, for car models in this data set, which makes sense.
+
+## Data Types
+There are four common data types for vectors: numeric (also called double), integer, character, and logical.  Some examples: 
+
+```{r}
+x <- c(1, 0.5) # numeric
+x <- 1:10 # integer
+x <- c("a", "b", "c") # character
+x <- c(TRUE, FALSE) # logical
+```
+
+You can use \texttt{class()} to check the data type. 
+```{r}
+y <- c(TRUE, TRUE, FALSE, FALSE)
+class(y)
+```
+
+\newpage
+
+```{r}
+letters
+class(letters)
+```
+
+
+Vectors in R can only contain data of the same type. When different data types are mixed in a vector, R will implicitly coerce all elements to the same type.
+
+```{r}
+x <- c("a", 2)
+x
+class(x)
+```
+&nbsp;
+
+That was a lot of information if this is your first time using R.  Congratulations! Take a deep breath, you will have the rest of the semester to get comfortable with using R and RStudio.  We will review this material in class, and you will see the same R commands and functions repeatedly used in different contexts.
+
+\newpage
+
+## Practice Problems
+
+Not to be collected.\
+
+**Exercise 1**. Use R to find the sum of numbers from 1 to 1000.
+
+**Exercise 2**. Use \texttt{seq()} to express the sequence $3, 6, 9, \cdots, 60$ as a vector in R.
+
+**Exercise 3**. Find the min, max, mean, and median of the car weight variable (\texttt{wt}).
+
+**Exercise 4**. Make a plot of `mpg` versus `cyl`.  Label the $y$-axis "Miles per gallon" and the $x$-axis "Number of cylinders".  Describe the association between the two variables.
+
+**Exercise 5**. We can use `which.min()` and `which.max()` to find the index (position) of the minimum and maximum element of an R vector. For example, look at the following simple example:
+```{r}
+x <- c(2, 7, 100, -1, 5)
+which.max(x)
+which.min(x)
+```
+The following command will extract the row of the `mtcars` data frame corresponding to the car with the minimum `mpg`.
+```{r}
+mtcars[which.min(mtcars$mpg), ]
+```
+Similarly, we can extract the row corresponding to the car with the maximum `mpg`:
+```{r}
+mtcars[which.max(mtcars$mpg), ]
+```
+Using this technique, which car model in the `mtcars` data frame has the minimum weight?  Which car model has the maximum weight?  Recall that weight is the column named `wt`.
+
+**Exercise 6**. Consider the R code below with vectors that contain different data types.  Since this is not allowed, what data type does R coerce each vector to?
+
+```{r}
+x <- c(1, 0, FALSE, TRUE)
+y <- c(1, 2, "three")
+z <- c("TRUE", FALSE)
+```
+
+
+\newpage
+
+## References
+
+Here are some useful references for learning R:
+
+&nbsp;
+
+Garrett Grolemund and Hadley Wickham. *R for Data Science*.  Free electronic version:
+
+https://r4ds.had.co.nz/
+
+&nbsp;
+
+Roger Peng. *R Programming for Data Science*.  Free electronic version: 
+
+https://bookdown.org/rdpeng/rprogdatascience/
+
+
+
+
+
+

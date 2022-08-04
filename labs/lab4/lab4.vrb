@@ -1,0 +1,18 @@
+Generate $n=1000$ random numbers from $N(0,1)$ and plot the density histogram and normal QQ plot.
+
+\scriptsize
+\begin{verbatim}
+> sim_norm1000 <- rnorm(1000)
+> hist(sim_norm1000, freq=FALSE, xlab='', main='')
+> x <- seq(-3, 3, 0.01)
+> y <- dnorm(x, mean=mean(sim_norm1000), sd=sd(sim_norm1000))
+> lines(x, y, col="red", lwd=2)
+>
+> qqnorm(sim_norm1000)
+> qqline(sim_norm1000)
+\end{verbatim}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.5]{figure/simnorm1000.pdf}
+\end{figure}

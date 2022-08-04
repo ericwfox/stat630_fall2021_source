@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\textbf{STAT 630, HW 3}\\
+\textbf{Due}: Thursday, September 16\\
+
+\textbf{Reading}: OpenIntro, Sections 2.1 and 2.2\\
+
+\textbf{Directions:} Please submit your completed assignment to Blackboard.  For the concept questions, your solutions may be typed, or handwritten and then scanned.  The data analysis questions should be completed using R Markdown and then rendered to HTML, PDF, or Word format.\\  
+
+\large
+\textbf{Concept Questions}\\
+\normalsize
+
+\textbf{Exercise 1}. An athlete preparing for a bicycle competition records the number of miles spent biking each day over a month long period.  The sample mean $\bar{x}=15.4$ miles and standard deviation $s=6.2$ miles.  What are the sample mean and standard deviation when converting distance to kilometers (km).  Note that the conversion formula is 1 mile = 1.6 km.\\
+
+\textbf{Exercise 2}.  Test scores for a math class with 30 students have a sample mean $\bar{x}=84.5$ points (out of 100) and a standard deviation $s = 7.2$ points.  The teacher decides to give every student an extra 5 points for redoing questions that they missed.  What are the sample mean and standard deviation after adding 5 points to each exam score?\\
+
+% \textbf{Exercise 3}. Based on the R output below for \texttt{summary(x)}, determine whether the numeric vector \texttt{x} contains any outliers?  (Hint: compute the upper fence and lower fence)
+<<eval=F, echo=F>>=
+x <- iris$Sepal.Length
+@
+<<eval=F, echo=F>>=
+summary(x)
+@
+
+\textbf{Exercise 3}.  Describe the distribution in the histograms below and match them to the box plots. 
+\includegraphics[width=\textwidth]{hist_box_match.pdf}
+\medskip
+
+\textbf{Exercise 4}.  Without doing any calculations determine whether the standard deviation of Set 1 is larger than, smaller than, or equal to Set 2.  Give a brief explanation.
+\begin{enumerate}[(a)]
+\item Set 1: $-1, 0, 0, 2, 2, 5, 7, 9, 8, 100$\\
+Set 2: $-1, 0, 0, 2, 2, 5, 7, 9, 8, 101$
+\item Set 1: $-1, 0, 0, 2, 2, 5, 7, 9, 8, 100$\\
+Set 2: $1, 2, 2, 4 , 4, 7, 9, 11, 10, 102$
+\item Set 1: $-1, 0, 0, 2, 2, 5, 7, 9, 8, 100$\\
+Set 2: $-2, 0, 0, 4 , 4, 10, 14, 18, 16, 200$\\
+\end{enumerate}
+
+\textbf{Exercise 5}. Compute the mean $\bar{x}$ and median $m$ of the seven numbers 
+3, 5, 8, 15, 20, 21, 24.  Apply the logarithm to the data, and then compute the mean $\bar{x}'$ and median $m'$ of the transformed data.  Is $\ln(\bar{x}) = \bar{x}'$? Is $\ln(m) = m'$?  You can use R to answer this.\\
+\medskip
+
+\large
+\textbf{Data Analysis Questions}\\
+\normalsize
+Exercises 6 and 7 use the CDC data set.  Run the following command to load this data set into R:
+
+<<eval=F, echo=T>>=
+cdc <- readRDS(url("https://ericwfox.github.io/data/cdc.rds"))
+@
+
+\textbf{Exercise 6}.  
+\begin{enumerate}[(a)]
+\item Make a contingency table for the \texttt{exerany} and \texttt{genhlth} variables (the table should have 2 rows and 5 columns).  Recall that the \texttt{exerany} variable is 1 if the respondent exercised in the last month, and 0 otherwise.  Make sure that the levels of \texttt{genhlth} are ordered correctly by entering the command:
+<<eval=F, echo=T>>=
+cdc$genhlth <- factor(cdc$genhlth, 
+  levels=c("poor", "fair", "good", "very good", "excellent"))
+@
+\item Make a stacked bar plot of the contingency table in created in part ($a$).  The plot should have the categories of \texttt{genhlth} along the horizontal axis.  The segments for each bar should correspond to the \texttt{exerany} variable.  Add a legend to the plot.  You can use either the base R or ggplot2 approach.  
+\item Use \texttt{prop.table()} to make a contingency table with the column proportions for the \texttt{exerany} and \texttt{genhlth} variables (the table should have 2 rows and 5 columns, and the columns should sum to 1).
+\item Make a stacked bar plot of the contingency table of column proportions created in part ($c$).  Comment on any trend you notice in the plot.\\
+\end{enumerate}
+
+\textbf{Exercise 7}.  Make a new variable called \texttt{wtdiff} which is the difference between each person's desired weight, \texttt{wtdesire}, and actual weight, \texttt{weight} (that is, desired weight - actual weight).  Plot a histogram and compute summary statistics for  \texttt{wtdiff}. Describe the distribution in terms of its center, shape, and spread.  Feel free to adjust the number of bins in the histogram.\\
+
+\textbf{Exercise 8}.\\
+For this exercise, load the \texttt{maps} package and read in the EPA stream (NRSA) data set into R:
+<<eval=F, echo=T>>=
+library(maps) 
+nrsa <- readRDS(url("https://ericwfox.github.io/data/nrsa.rds"))
+@
+\begin{enumerate}[(a)]
+\item Make a map of the US and superimpose those stream sites that are in \texttt{Good} condition.   Color the points blue.
+\item Make another map of the US and superimpose those stream sites that are in \texttt{Poor} condition.  Color the points red.
+\end{enumerate}
+
+
+\end{document}

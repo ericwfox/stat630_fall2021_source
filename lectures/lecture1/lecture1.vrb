@@ -1,0 +1,26 @@
+\frametitle{Data Tables}
+Here is an example of a data set from a survey conducted by the National Center for Health Statistics.  The rows are 1500 participants in the survey.  The columns are variables on demographic characteristics of the participants.  The data table contains 1500 rows by 4 columns.
+
+\small
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrlr}
+  \hline
+ & Gender & Age & Education & Income\footnote{in thousands of US dollars}\\
+  \hline
+1 & male &  40 & College Grad & 60.00 \\
+  2 & female &  37 & College Grad & 87.50 \\
+  3 & male &  57 & High School & 60.00 \\
+  4 & female &  54 & College Grad & 100.00 \\
+  5 & female &  73 & High School & 12.50 \\
+  6 & male &  55 & Some College & 17.50 \\
+  7 & female &  80 & 9 - 11th Grade & 100.00 \\
+  8 & female &  23 & Some College & 22.50 \\
+  9 & male &  51 & 9 - 11th Grade & 87.50 \\
+  10 & male &  33 & College Grad & 50.00 \\
+  $\vdots$ & $\vdots$ &  $\vdots$ & $\vdots$ & $\vdots$ \\
+  1499 & male &  24 & College Grad & 17.50 \\
+  1500 & female &  20 & High School & 70.00 \\
+   \hline
+\end{tabular}
+\end{table}

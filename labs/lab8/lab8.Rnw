@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{enumerate}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+\large \textbf{Lab 8: Inference for Proportions and Chi-Square Tests using R}\\
+\normalsize \textbf{STAT 630, Fall 2021}\\
+
+
+\textbf{Data set}: The General Social Survey (GSS) is a major survey that tracks American demographics, characteristics, and views on social and cultural issues.  It is conducted by the National Opinion Research Center (NORC) at the University of Chicago.\\  
+
+The 2002 GSS data can be accessed from the \texttt{resampledata} library.  It contains the responses of 2765 participants.
+
+<<message=F, warning=F>>=
+library(resampledata)
+data("GSS2002")
+@
+
+Variable descriptions:
+\begin{table}[ht]
+\begin{tabular}{l|l}
+\hline
+Variable & Description\\
+\hline
+Region & Interview location\\
+Gender &  Gender of respondent\\
+Race & Race of respondent\\
+Education &  Highest level of education\\
+Marital &  Marital status\\
+Religion &  Religious affiliation\\
+Happy &  General happiness\\
+Income &  Respondent's income\\
+Politics & Political views\\
+Marijuana &  Legalize marijuana?\\
+Death Penalty &  Death penalty for murder?\\
+OwnGun &  Have gun at home?\\
+GunLaw &  Require permit to buy a gun?\\
+Pres00 &  Whom did you vote for in the 2000 presidential election?\\
+Postlife & Believe in life after death?\\
+\end{tabular}
+\end{table}
+
+\textbf{Example: two proportion z-test and confidence interval}\\
+Using this data, let's test the hypothesis that men and women differ in their beliefs in an afterlife.  Specifically, we are testing\\ 
+$H_0$: $p_f = p_m$\\
+$H_A$: $p_f \neq p_m$\\
+where $p_f$ is the population proportion of females who believe in an afterlife, and $p_m$ is the population proportion of men who believe in an afterlife.\\
+\clearpage
+
+First, remove the missing data.
+<<>>=
+index <- which(is.na(GSS2002$Gender) | is.na(GSS2002$Postlife))
+gender <- GSS2002$Gender[-index]
+postlife <- GSS2002$Postlife[-index]
+@
+
+Next, we can examine some contingency tables:
+<<>>=
+addmargins(table(gender, postlife))
+prop.table(table(gender, postlife), margin=1)
+@
+The sample sizes are large enough in each cell (greater than 5), so the conditions for the $z$-test are satisfied.  Based on the table of row proportions, it appears that a higher proportion of females believe in an afterlife than males.  We can proceed with the hypothesis test to find out if this is statistically significant.
+
+<<>>=
+n <- length(postlife)
+n_f <- sum(gender == "Female")
+n_m <-  sum(gender == "Male")
+# sample proportion of females that believe in afterlife:
+phat_f <- sum(gender == "Female" & postlife == "Yes") / n_f; phat_f
+# sample proportion of males that believe in afterlife:
+phat_m <- sum(gender == "Male" & postlife == "Yes") / n_m; phat_m
+# pooled sample proportion
+phat <- sum(postlife == "Yes") / n; phat
+@
+\clearpage
+
+<<>>=
+# compute test statistic
+SE <- sqrt(phat*(1-phat)*(1/n_f + 1/n_m))
+z <- (phat_f - phat_m) / SE; z
+
+# p-value
+pvalue <-  2 * (1 - pnorm(z)); pvalue
+@
+
+
+The result is highly significant.  We reject $H_0$ since the $p$-value $\approx 0$.  Conclusively, the data suggest that men and women differ in their views of an afterlife.\\
+
+Next, let's calculate a 95\% confidence interval for the difference between the proportion of males and females who believe in an afterlife:
+<<>>=
+SE <- sqrt(phat_f*(1-phat_f)/n_f + phat_m*(1-phat_m)/n_m)
+ci_l <- phat_f - phat_m - 1.96 * SE
+ci_u <- phat_f - phat_m + 1.96 * SE
+round(c(ci_l, ci_u), 3)
+@
+We are 95\% confident that the population proportion of females who believe in an afterlife is between 0.049 and 0.139 higher than the population proportion of males who believe in an afterlife.\\
+\clearpage
+
+\textbf{Example: chi-square test for independence}\\
+Going back to the example from lecture:\\
+$H_0:$ Education and position on death penalty are independent.\\
+$H_A:$ Education and position on death penalty are not independent.\\
+
+First, let's examine some contingency tables:
+
+<<>>=
+education <- GSS2002$Education
+death_penalty <- GSS2002$DeathPenalty
+addmargins(table(education, death_penalty))
+prop.table(table(education, death_penalty), margin=1)
+@
+
+We can use the function \texttt{chisq.test()} to implement the chi-square test for independence.  Note that this function will automatically remove any missing data.
+
+<<>>=
+chisq1 <- chisq.test(education, death_penalty)
+chisq1
+@
+The chi-square test statistic is 23.45 with a p-value $=0.0001029$.  Since the $p$-value $<0.05$ we reject $H_0$, and conclude that the survey provides convincing evidence that education level and position on the death penalty are not independent.  Note that the results from the R function are the same as the manual computations on the lecture slides.\\
+
+The object \texttt{chisq1} also has attributes that we can extract by name.  
+<<>>=
+attributes(chisq1)
+# test statistic
+chisq1$statistic
+# p-value
+chisq1$p.value
+# table of expected counts
+chisq1$expected
+@
+
+
+% \clearpage
+% 
+% \large
+
+% \textbf{Exercise} (in class): Does the 2002 GSS survey provide evidence of an association between marital status and general happiness?  To find out, conduct a chi-square test of independence between the variables \texttt{Marital} and \texttt{Happy}.   Write down the null and alternative hypotheses and your conclusion based on the $p$-value.  Also, check the conditions for the test.
+% 
+% <<echo=F, eval=F>>=
+% happy <- GSS2002$Happy
+% marital <- GSS2002$Marital
+% addmargins(table(marital, happy))
+% prop.table(table(marital, happy), margin = 1)
+% chi1 <- chisq.test(marital, happy)
+% chi1
+% chi1$expected
+% @
+
+
+\end{document}

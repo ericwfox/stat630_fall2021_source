@@ -1,0 +1,14 @@
+Code used to create last map:
+\small
+\begin{verbatim}
+> nrsa_good <- subset(nrsa, cond == "Good")
+> nrsa_fair <- subset(nrsa, cond == "Fair")
+> nrsa_poor <- subset(nrsa, cond == "Poor")
+
+> map("state")
+> points(nrsa_good$lon, nrsa_good$lat, cex=0.5, col = "blue")
+> points(nrsa_fair$lon, nrsa_fair$lat, cex=0.5, col = "orange")
+> points(nrsa_poor$lon, nrsa_poor$lat, cex=0.5, col = "red")
+> legend("bottomright", c("poor", "fair", "good"),
+         col=c("red","orange","blue"), pch=1)
+\end{verbatim}

@@ -1,0 +1,50 @@
+---
+title: "Lab 9 Solutions"
+author: "STAT 630, Fall 2021"
+output: pdf_document
+---
+
+```{r, message = FALSE}
+library(dplyr)
+cdc <- readRDS(url("https://ericwfox.github.io/data/cdc.rds"))
+```
+
+
+**Exercise (in-class):**  Use `filter()` to subset the rows of the `cdc` data frame corresponding to individuals that 
+
+1. are over 6 feet tall
+
+```{r}
+cdc %>% filter(height > 72) %>% head()
+```
+
+2. are men that have smoked over 100 cigarettes
+
+```{r}
+cdc %>% filter(smoke100 == 1 & gender == "m")  %>% head()
+```
+
+3. are in `good` or `very good` health 
+
+```{r}
+cdc %>% filter(genhlth == "good" | genhlth == "very good") %>% head()
+```
+
+\newpage
+
+**Exercises (in-class):**  For each category of `genhlth` compute the mean age, weight, and desired weight.
+
+```{r, message = FALSE}
+hlth_levels <-  c("poor", "fair", "good", "very good", "excellent")
+
+cdc %>%
+  group_by(genhlth) %>%
+  mutate(genhlth = factor(genhlth, levels = hlth_levels)) %>% # change ordering of categories
+  summarise(
+    count = n(),
+    age_mean = mean(age),
+    weight_mean = mean(weight),
+    wtdesire_mean = mean(wtdesire)
+  )
+```
+

@@ -1,0 +1,13 @@
+\frametitle{Example: Normality of Residuals}
+To check whether the residuals follow a normal distribution, make a histogram and QQ plot.  For the example below, the residuals look normally distributed, except for two potential outliers.
+
+\small
+\begin{verbatim}
+> par(mfrow=c(1,2))
+> hist(resid(lm1), xlab = "Residuals", main= "")
+> qqnorm(resid(lm1))
+> qqline(resid(lm1))
+\end{verbatim}
+
+\centering
+\includegraphics[scale=0.55]{figure/cars_norm_resid.pdf}

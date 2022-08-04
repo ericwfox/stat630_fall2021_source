@@ -1,0 +1,74 @@
+\documentclass[12pt, fleqn]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\begin{document}
+\setlength\parindent{0pt}
+
+Lecture 14: Simple Linear Regression\\ 
+Practice Problems\\ 
+STAT 630, Fall 2020\\
+
+Data was collected on the highway miles per gallon (MPG) and weight (pounds) of 93 cars in the USA in 1993.  Below is some R output for fitting a simple linear regression model to this data.  A scatter plot with the least squares line is also shown below.
+\begin{verbatim}
+> library(MASS)
+> lm1 <- lm(MPG.highway ~ Weight, data=Cars93)
+> summary(lm1)
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 51.6013654  1.7355498   29.73   <2e-16 ***
+Weight      -0.0073271  0.0005548  -13.21   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.139 on 91 degrees of freedom
+Multiple R-squared:  0.6572,	Adjusted R-squared:  0.6534 
+F-statistic: 174.4 on 1 and 91 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+# make scatter plot with least squares line
+> plot(Cars93$Weight, Cars93$MPG.highway, 
+    xlab = "Weight (lbs)", ylab = "Highway MPG")
+> abline(lm1)
+\end{verbatim}
+
+\begin{figure}[ht!]
+\includegraphics[scale=0.65]{figure/mpg_scatter_fit.pdf}
+\end{figure} 
+\clearpage
+
+\begin{enumerate}[(a)]
+\item Describe the association between weight and highway MPG.\\
+\vspace{0.5cm}
+
+\item What are the explanatory and response variables for the linear regression model?\\
+\vspace{1cm}
+
+\item Write the equation for the least squares line.\\
+\vspace{1cm}
+
+\item Interpret the slope of the model.\\
+\vspace{1.75cm}
+
+\item Interpret the intercept of the model, or explain why it does not make sense to try to interpret the intercept.\\
+\vspace{1.75cm}
+
+\item What is the predicted highway MPG for a car that weights 3000 pounds?\\
+\vspace{1cm}
+
+\item One of car models (BMW 535i) in the data set has an observed weight of 3640 and highway MPG of 30.  Calculate the residual for this car model?\\
+\vspace{1.75cm}
+
+\item Interpret the coefficient of determination ($R^2$).\\
+\end{enumerate}
+
+\end{document}
